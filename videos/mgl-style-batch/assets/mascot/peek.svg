@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 580" width="420" height="580">
+        <defs>
+          <linearGradient id="st-peek-skin" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F7BA8E"/>
+            <stop offset="70%" stop-color="#EEA271"/>
+            <stop offset="100%" stop-color="#DC8652"/>
+          </linearGradient>
+          <linearGradient id="st-peek-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#383C4A"/>
+            <stop offset="65%" stop-color="#252832"/>
+            <stop offset="100%" stop-color="#171920"/>
+          </linearGradient>
+          <linearGradient id="st-peek-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3E271C"/>
+            <stop offset="100%" stop-color="#20120B"/>
+          </linearGradient>
+          <filter id="st-peek-outline" x="-22%" y="-22%" width="144%" height="144%">
+            <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="10"/>
+            <feFlood flood-color="#FFFFFF" flood-opacity="1" result="WHITE"/>
+            <feComposite in="WHITE" in2="DILATED" operator="in" result="OUTLINE"/>
+            <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000000" flood-opacity="0.30" result="SHADOW"/>
+            <feMerge>
+              <feMergeNode in="SHADOW"/>
+              <feMergeNode in="OUTLINE"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sombra independente reativa ao squash & stretch -->
+        <ellipse class="mascot-shadow" cx="210" cy="548" rx="112" ry="16" fill="rgba(0,0,0,0.24)"/>
+
+        <g class="mascot-body-rig" filter="url(#st-peek-outline)" style="transform-origin: 210px 526px;">
+          <!-- Pernas + Sombreamento joelho -->
+          <rect x="164" y="424" width="28" height="72" rx="12" fill="url(#st-peek-skin)" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="228" y="424" width="28" height="72" rx="12" fill="url(#st-peek-skin)" stroke="#1E130D" stroke-width="3.5"/>
+
+          <!-- Tenis 2.5D -->
+          <g>
+            <path d="M142 508 Q140 486 164 484 L194 486 Q204 494 202 516 L146 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="142" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="162" y1="494" x2="180" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+
+            <path d="M218 516 Q216 494 226 486 L256 484 Q280 486 278 508 L274 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="216" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="240" y1="494" x2="258" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Shorts com highlight -->
+          <path d="M150 388 L270 388 L276 442 L222 442 L210 422 L198 442 L144 442 Z" fill="#1D1F27" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+
+          <!-- Bracos articulados independentes -->
+          <g class="mascot-arm-l" style="transform-origin: 148px 326px;">
+            
+        <path d="M148 326 C126 350 112 356 100 342" fill="none" stroke="url(#st-peek-skin)" stroke-width="24" stroke-linecap="round"/>
+        <circle cx="96" cy="336" r="16" fill="url(#st-peek-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+          <g class="mascot-arm-r" style="transform-origin: 272px 326px;">
+            
+        <path d="M272 326 C312 308 322 238 292 178" fill="none" stroke="url(#st-peek-skin)" stroke-width="23" stroke-linecap="round"/>
+        <circle cx="290" cy="172" r="16" fill="url(#st-peek-skin)" stroke="#1E130D" stroke-width="3"/>
+        <circle cx="305" cy="242" r="9" fill="#2A2D36" stroke="#111" stroke-width="2"/>
+          </g>
+
+          <!-- Tronco + Rim Light -->
+          <g class="mascot-torso" style="transform-origin: 210px 395px;">
+            <path d="M144 302 Q210 290 276 302 L292 344 L268 354 L270 398 L150 398 L152 354 L128 344 Z" fill="url(#st-peek-shirt)" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M164 316 Q210 330 256 316" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M182 300 Q210 318 238 300" fill="none" stroke="#14161D" stroke-width="4"/>
+          </g>
+
+          <!-- Cabeca Articulada (pivote no pescoco) -->
+          <g class="mascot-head-rig" style="transform-origin: 210px 286px;">
+            <rect x="192" y="276" width="36" height="30" rx="10" fill="#D88858" stroke="#1E130D" stroke-width="3"/>
+            <ellipse cx="106" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+            <ellipse cx="314" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+
+            <!-- Rosto 2.5D -->
+            <path d="M112 162 C112 96 308 96 308 162 C308 232 284 282 210 282 C136 282 112 232 112 162 Z" fill="url(#st-peek-skin)" stroke="#1E130D" stroke-width="4"/>
+            <!-- Rubor sutil nas bochechas -->
+            <ellipse cx="148" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+            <ellipse cx="272" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+
+            <!-- Cabelo volumetrico -->
+            <path d="M108 172 C100 106 132 58 210 56 C288 58 320 106 312 172 C304 142 284 122 252 124 C236 114 218 126 198 120 C172 112 148 126 128 134 C116 144 112 154 108 172 Z" fill="url(#st-peek-hair)" stroke="#160B06" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M150 82 Q178 68 206 78 M218 76 Q246 66 270 84" fill="none" stroke="#5A3929" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Barba -->
+            <path d="M114 196 C114 252 152 284 210 284 C268 284 306 252 306 196 C298 220 278 232 252 230 C236 226 224 222 210 222 C196 222 184 226 168 230 C142 232 122 220 114 196 Z" fill="#24150E" stroke="#160B06" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="210" cy="252" rx="34" ry="18" fill="#F2AB7E"/>
+            <path d="M178 236 Q210 222 242 236 Q230 246 210 242 Q190 246 178 236 Z" fill="#24150E"/>
+            <path d="M204 206 Q210 222 218 212" fill="none" stroke="#C47444" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- Sobrancelhas -->
+            <g class="mascot-brows" style="transform-origin: 210px 160px;">
+              
+        <path d="M146 164 Q168 152 188 162" fill="none" stroke="#1E130D" stroke-width="7" stroke-linecap="round"/>
+        <path d="M234 162 Q254 152 276 164" fill="none" stroke="#1E130D" stroke-width="7" stroke-linecap="round"/>
+            </g>
+
+            <!-- Olhos + Palpebras para piscada natural -->
+            <g class="mascot-eyes" style="transform-origin: 210px 193px;">
+              
+        <ellipse cx="170" cy="194" rx="17" ry="16" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="170" cy="194" r="10" fill="#23140E"/>
+        <circle cx="166" cy="189" r="3.6" fill="#FFFFFF"/>
+        <ellipse cx="250" cy="194" rx="17" ry="16" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="248" cy="194" r="10" fill="#23140E"/>
+        <circle cx="244" cy="189" r="3.6" fill="#FFFFFF"/>
+              <g class="mascot-eyelids" opacity="0">
+                <path d="M150 193 Q170 202 190 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+                <path d="M230 193 Q250 202 270 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- Boca sincronizada com WordBoundary (lip-sync) -->
+            <g class="mascot-mouth" style="transform-origin: 210px 252px;">
+              
+        <ellipse cx="210" cy="252" rx="14" ry="10" fill="#5E1D1B" stroke="#1E130D" stroke-width="3"/>
+        <path d="M201 247 Q210 245 219 247" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </g>
+          </g>
+
+          <!-- Prop do mascote (lupa / venda / laptop) -->
+          <g class="mascot-prop" style="transform-origin: 210px 260px;">
+            
+        <path d="M104 176 Q178 195 294 152 L298 176 Q182 222 102 204 Z" fill="#1F222A" stroke="#0E0F14" stroke-width="3.5"/>
+        <path d="M104 198 L92 226 L112 222 Z" fill="#1F222A" stroke="#0E0F14" stroke-width="3"/>
+          </g>
+        </g>
+      </svg>

@@ -1,0 +1,17 @@
+[project]
+name = "maquinadevideos"
+version = "0.2.0"
+description = "Maquinadevideos — multi-pipeline programmatic video production studio (HyperFrames, Puppeteer+FFmpeg, Python+FFmpeg, Edge-TTS)."
+requires-python = ">=3.10"
+dependencies = [
+  "pillow>=10.0.0",
+  "edge-tts>=6.1.0",
+]
+
+[project.optional-dependencies]
+transcribe = ["SpeechRecognition>=3.10.0"]
+dev = ["pytest>=8.0.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

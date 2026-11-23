@@ -1,0 +1,12 @@
+{
+  "name": "maquinadevideos",
+  "private": true,
+  "description": "Programmatic video generation and editing studio (Python, FFmpeg, Edge-TTS, Puppeteer, GSAP, HyperFrames).",
+  "scripts": {
+    "check:vistarumo": "npm --prefix videos/vistarumo-promo run check -- --strict",
+    "test:whatsapp": "npm --prefix videos/whatsapp-reels test",
+    "test:python": "python -m unittest discover -s tests -v",
+    "validate": "python scripts/validate_workspace.py",
+    "test": "npm run test:python && npm run test:whatsapp && npm run check:vistarumo"
+  }
+}

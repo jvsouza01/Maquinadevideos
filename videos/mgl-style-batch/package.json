@@ -1,0 +1,13 @@
+{
+  "name": "mgl-style-batch",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python scripts/build_batch.py",
+    "build:batch": "python scripts/build_batch.py",
+    "dev": "npx --yes hyperframes@0.9.77 preview",
+    "check": "npx --yes hyperframes@0.9.77 check",
+    "render": "npx --yes hyperframes@0.9.77 render --quality looks --output renders/01-ranking-ia-validados.mp4",
+    "render:batch": "python scripts/render_batch.py"
+  }
+}

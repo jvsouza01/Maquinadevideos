@@ -1,0 +1,17 @@
+{
+  "name": "whatsapp-reels",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test_preview_frames.js",
+    "render": "node render_video.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "puppeteer-core": "^25.17.0"
+  }
+}

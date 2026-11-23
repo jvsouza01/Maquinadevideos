@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 580" width="420" height="580">
+        <defs>
+          <linearGradient id="st-marina_coffee-skin" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FAD0B4"/>
+            <stop offset="70%" stop-color="#F2B892"/>
+            <stop offset="100%" stop-color="#E29E74"/>
+          </linearGradient>
+          <linearGradient id="st-marina_coffee-blouse" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="70%" stop-color="#F1ECE6"/>
+            <stop offset="100%" stop-color="#DED5CB"/>
+          </linearGradient>
+          <linearGradient id="st-marina_coffee-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#4A2B1D"/>
+            <stop offset="100%" stop-color="#27140B"/>
+          </linearGradient>
+          <linearGradient id="st-marina_coffee-bag" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5B382E"/>
+            <stop offset="100%" stop-color="#351E18"/>
+          </linearGradient>
+          <filter id="st-marina_coffee-outline" x="-22%" y="-22%" width="144%" height="144%">
+            <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="10"/>
+            <feFlood flood-color="#FFFFFF" flood-opacity="1" result="WHITE"/>
+            <feComposite in="WHITE" in2="DILATED" operator="in" result="OUTLINE"/>
+            <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000000" flood-opacity="0.28" result="SHADOW"/>
+            <feMerge>
+              <feMergeNode in="SHADOW"/>
+              <feMergeNode in="OUTLINE"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <ellipse class="mascot-shadow" cx="210" cy="548" rx="108" ry="15" fill="rgba(0,0,0,0.22)"/>
+
+        <g class="mascot-body-rig" filter="url(#st-marina_coffee-outline)" style="transform-origin: 210px 526px;">
+          <!-- Camada traseira do cabelo longo ondulado -->
+          <path d="M96 144 C76 226 84 318 112 368 Q154 348 164 316 L256 316 Q266 348 308 368 C336 318 344 226 324 144 Z" fill="url(#st-marina_coffee-hair)" stroke="#1C0E08" stroke-width="4" stroke-linejoin="round"/>
+
+          <!-- Calca elegante + Tenis branco -->
+          <path d="M158 386 L262 386 L270 492 L222 492 L210 434 L198 492 L150 492 Z" fill="#1F222C" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+          <path d="M144 508 Q144 490 166 488 L196 490 Q204 498 202 516 L146 516 Z" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="142" y="512" width="62" height="12" rx="6" fill="#F2F3F7" stroke="#1E130D" stroke-width="3.2"/>
+          <path d="M218 516 Q216 498 224 490 L254 488 Q276 490 276 508 L274 516 Z" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="216" y="512" width="62" height="12" rx="6" fill="#F2F3F7" stroke="#1E130D" stroke-width="3.2"/>
+
+          <!-- Bracos articulados -->
+          <g class="mascot-arm-l" style="transform-origin: 152px 324px;">
+            
+        <path d="M152 324 C122 348 128 378 168 374" fill="none" stroke="url(#st-marina_coffee-skin)" stroke-width="20" stroke-linecap="round"/>
+        <circle cx="172" cy="374" r="13" fill="url(#st-marina_coffee-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+          <g class="mascot-arm-r" style="transform-origin: 268px 324px;">
+            
+        <path d="M268 324 C294 348 288 378 248 374" fill="none" stroke="url(#st-marina_coffee-skin)" stroke-width="20" stroke-linecap="round"/>
+        <circle cx="244" cy="374" r="13" fill="url(#st-marina_coffee-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+
+          <!-- Blusa elegante -->
+          <g class="mascot-torso" style="transform-origin: 210px 388px;">
+            <path d="M152 298 Q210 288 268 298 L286 340 L264 350 L264 392 L156 392 L156 350 L134 340 Z" fill="url(#st-marina_coffee-blouse)" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M186 298 Q210 322 234 298" fill="none" stroke="#CBBFB2" stroke-width="3.5"/>
+          </g>
+
+          <!-- Cabeca Articulada -->
+          <g class="mascot-head-rig" style="transform-origin: 210px 282px;">
+            <rect x="194" y="270" width="32" height="32" rx="10" fill="#E8AC84" stroke="#1E130D" stroke-width="3"/>
+            <ellipse cx="108" cy="196" rx="15" ry="22" fill="#EDAF86" stroke="#1E130D" stroke-width="3.2"/>
+            <ellipse cx="312" cy="196" rx="15" ry="22" fill="#EDAF86" stroke="#1E130D" stroke-width="3.2"/>
+            <!-- Brincos discretos -->
+            <circle cx="108" cy="214" r="5" fill="#F4D392" stroke="#1E130D" stroke-width="2"/>
+            <circle cx="312" cy="214" r="5" fill="#F4D392" stroke="#1E130D" stroke-width="2"/>
+
+            <path d="M114 162 C114 96 306 96 306 162 C306 230 282 276 210 276 C138 276 114 230 114 162 Z" fill="url(#st-marina_coffee-skin)" stroke="#1E130D" stroke-width="3.8"/>
+            <ellipse cx="148" cy="216" rx="18" ry="9" fill="#F08A82" opacity="0.28"/>
+            <ellipse cx="272" cy="216" rx="18" ry="9" fill="#F08A82" opacity="0.28"/>
+
+            <!-- Franja + Topo cabelo feminino -->
+            <path d="M104 186 C98 100 138 52 210 52 C282 52 322 100 316 186 C306 144 282 114 238 118 C218 122 204 110 184 114 C144 122 116 146 104 186 Z" fill="url(#st-marina_coffee-hair)" stroke="#1C0E08" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M148 80 Q180 64 214 74 M228 74 Q260 66 282 88" fill="none" stroke="#6E4431" stroke-width="4.5" stroke-linecap="round"/>
+
+            <path d="M204 206 Q210 220 217 212" fill="none" stroke="#D1885B" stroke-width="3.6" stroke-linecap="round"/>
+
+            <g class="mascot-brows" style="transform-origin: 210px 158px;">
+              
+        <path d="M150 160 Q170 150 188 162" fill="none" stroke="#2B160E" stroke-width="5.2" stroke-linecap="round"/>
+        <path d="M232 162 Q250 150 270 160" fill="none" stroke="#2B160E" stroke-width="5.2" stroke-linecap="round"/>
+            </g>
+            <g class="mascot-eyes" style="transform-origin: 210px 193px;">
+              
+        <ellipse cx="170" cy="193" rx="18" ry="17" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.2"/>
+        <circle cx="168" cy="194" r="10.5" fill="#2A1710"/>
+        <circle cx="164" cy="189" r="3.6" fill="#FFFFFF"/>
+        <path d="M150 182 Q170 174 188 182" fill="none" stroke="#1E130D" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="250" cy="193" rx="18" ry="17" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.2"/>
+        <circle cx="248" cy="194" r="10.5" fill="#2A1710"/>
+        <circle cx="244" cy="189" r="3.6" fill="#FFFFFF"/>
+        <path d="M232 182 Q250 174 270 182" fill="none" stroke="#1E130D" stroke-width="4" stroke-linecap="round"/>
+              <g class="mascot-eyelids" opacity="0">
+                <path d="M150 193 Q170 202 190 193" fill="none" stroke="#1E130D" stroke-width="4.8" stroke-linecap="round"/>
+                <path d="M230 193 Q250 202 270 193" fill="none" stroke="#1E130D" stroke-width="4.8" stroke-linecap="round"/>
+              </g>
+            </g>
+            <g class="mascot-mouth" style="transform-origin: 210px 248px;">
+              
+        <ellipse cx="210" cy="248" rx="11" ry="8" fill="#8C363C" stroke="#1E130D" stroke-width="2.5"/>
+            </g>
+          </g>
+
+          <!-- Prop na mao (bolsa / celular / xicara) -->
+          <g class="mascot-prop" style="transform-origin: 210px 368px;">
+            
+        <!-- Xicara de cafe frio -->
+        <path d="M184 352 L236 352 L230 392 Q210 398 190 392 Z" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M235 358 Q252 358 252 372 Q252 384 233 384" fill="none" stroke="#1E130D" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="210" cy="352" rx="26" ry="7" fill="#4A2E20" stroke="#1E130D" stroke-width="3"/>
+          </g>
+        </g>
+      </svg>

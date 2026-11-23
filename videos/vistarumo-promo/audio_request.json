@@ -1,0 +1,28 @@
+{
+  "provider": "auto",
+  "speed": "1.0",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Fala, Xerife! Você já estuda com foco e disciplina. Agora, vista o seu propósito todos os dias."
+    },
+    {
+      "id": "02",
+      "text": "Conheça a Vista Rumo: vista seu caminho rumo ao seu destino, com camisetas exclusivas que unem conforto, presença e identidade."
+    },
+    {
+      "id": "03",
+      "text": "Peças feitas pra você treinar pro TAF, encarar a rotina de estudos e carregar a mentalidade de aprovado."
+    },
+    {
+      "id": "04",
+      "text": "E tem condição especial: Frete Grátis pra todo o Nordeste a partir de duas peças! Clica no link da descrição!"
+    }
+  ],
+  "bgm": {
+    "mode": "retrieve",
+    "query": "cinematic-percussion-action",
+    "blob": "Vista seu caminho rumo ao seu destino: conheça as camisetas exclusivas VistaRumo com Frete Grátis para todo o Nordeste a partir de 2 peças",
+    "arc": "Hook → Slogan & Product Intro → Tactical Lifestyle → Offer & CTA"
+  }
+}

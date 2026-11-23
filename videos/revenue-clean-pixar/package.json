@@ -1,0 +1,11 @@
+{
+  "name": "revenue-clean-pixar",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python scripts/build_audio_and_foley.py && python scripts/build_scenes.py",
+    "dev": "npx --yes hyperframes@0.9.77 preview",
+    "check": "npx --yes hyperframes@0.9.77 check",
+    "render": "npx --yes hyperframes@0.9.77 render --quality looks --output renders/04-revenue-clean-pixar.mp4"
+  }
+}

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          font-family: "Sora", sans-serif;
+          background: #0E1016;
+        }
+        .shot {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        .shot-cam {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          transform-origin: 50% 42%;
+        }
+        .shot-media {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .cinematic-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 44%, rgba(0,0,0,0) 54%, rgba(8,10,15,0.48) 100%);
+          pointer-events: none;
+        }
+        
+      .warm-lamp-bloom {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 26% 24%, rgba(255,196,112,0.18) 0%, rgba(255,196,112,0) 60%);
+        pointer-events: none;
+        z-index: 10;
+      }
+      .bottle-label-overlay {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 14;
+      }
+      .cta-zone {
+        position: absolute;
+        left: 110px;
+        right: 110px;
+        bottom: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        z-index: 25;
+      }
+      .cta-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 22px 62px;
+        border-radius: 999px;
+        background: #9EB8A0;
+        color: #101513;
+        font-size: 40px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.50);
+      }
+      .cta-sub {
+        font-size: 29px;
+        font-weight: 700;
+        color: #F2ECE3;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.65);
+      }
+    
+      </style>
+
+      <div id="root" data-composition-id="scene-04-unboxing" data-width="1080" data-height="1920">
+        
+      <div id="s4-a" class="shot">
+        <div id="s4-a-cam" class="shot-cam">
+          <video id="vid-shot_4a" class="shot-media" src="assets/clips/shot_4a.mp4" data-start="0.0" data-duration="5.6" data-playback-rate="0.88" data-track-index="1" muted playsinline preload="auto"></video>
+        </div>
+        <div class="warm-lamp-bloom"></div>
+        <div class="cinematic-vignette"></div>
+      </div>
+
+      <div id="s4-b" class="shot">
+        <div id="s4-b-cam" class="shot-cam">
+          <video id="vid-shot_4b" class="shot-media" src="assets/clips/shot_4b.mp4" data-start="5.6" data-duration="7.6" data-playback-rate="0.65" data-track-index="1" muted playsinline preload="auto"></video>
+          <!-- Rotulo oficial Revenue Clean composto com sombreamento cilindrico 3D e tracking no frasco -->
+          <svg class="bottle-label-overlay" viewBox="0 0 1080 1920" width="1080" height="1920" data-layout-ignore="true">
+            <defs>
+              <linearGradient id="rc-cyl-bg" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#222C26" stop-opacity="0.96"/>
+                <stop offset="55%" stop-color="#17201B" stop-opacity="0.96"/>
+                <stop offset="100%" stop-color="#0D120F" stop-opacity="0.98"/>
+              </linearGradient>
+              <linearGradient id="rc-cyl-sheen" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+                <stop offset="35%" stop-color="rgba(255,255,255,0.04)"/>
+                <stop offset="100%" stop-color="rgba(0,0,0,0.28)"/>
+              </linearGradient>
+            </defs>
+            <g id="rc-label-group">
+              <rect x="-56" y="-82" width="112" height="164" rx="12" fill="url(#rc-cyl-bg)" stroke="rgba(229, 200, 146, 0.72)" stroke-width="2.2"/>
+              <rect x="-56" y="-82" width="112" height="164" rx="12" fill="url(#rc-cyl-sheen)"/>
+              <text x="0" y="-34" text-anchor="middle" fill="#FAF7F0" font-family="Sora, sans-serif" font-weight="800" font-size="14" letter-spacing="1.2">REVENUE</text>
+              <text x="0" y="-12" text-anchor="middle" fill="#B5D1B8" font-family="Sora, sans-serif" font-weight="800" font-size="17" letter-spacing="1">CLEAN</text>
+              <line x1="-34" y1="6" x2="34" y2="6" stroke="rgba(229,200,146,0.45)" stroke-width="1.5"/>
+              <text x="0" y="30" text-anchor="middle" fill="#F2D8C8" font-family="Sora, sans-serif" font-weight="700" font-size="10.5">AROMA ÍNTIMO</text>
+              <text x="0" y="50" text-anchor="middle" fill="#9AA89D" font-family="Sora, sans-serif" font-weight="600" font-size="8.5">CUIDADO DIÁRIO</text>
+            </g>
+          </svg>
+        </div>
+        <div class="warm-lamp-bloom"></div>
+        <div class="cinematic-vignette"></div>
+
+        <!-- Terco inferior livre para CTA Saiba mais -->
+        <div id="s4-cta" class="cta-zone">
+          <div class="cta-pill">Saiba mais →</div>
+          <div class="cta-sub">Revenue Clean · Aroma Íntimo</div>
+        </div>
+      </div>
+    
+      </div>
+
+      <script>
+        (function () {
+          var tl = gsap.timeline({ paused: true });
+          
+      // 4A (0 -> 5.6s)
+      tl.set("#s4-a-cam", { scale: 1.0 }, 0);
+
+      // 4B (5.6 -> 13.2s)
+      tl.set("#s4-b", { opacity: 0 }, 0);
+      tl.set("#s4-b", { opacity: 1 }, 5.6);
+      tl.set("#s4-a", { opacity: 0 }, 5.6);
+      tl.set("#s4-b-cam", { scale: 1.0 }, 5.6);
+      
+      // Tracking preciso do rotulo sobre o cilindro verde durante o push-in do Google Flow (5.6 -> 13.2s)
+      tl.set("#rc-label-group", { x: 458, y: 1052, rotation: -17.5, scale: 0.92, transformOrigin: "0px 0px" }, 0);
+      tl.to("#rc-label-group", { x: 450, y: 1175, rotation: -16.5, scale: 1.06, duration: 3.85, ease: "sine.inOut" }, 5.6);
+      tl.to("#rc-label-group", { x: 438, y: 1265, rotation: -15.5, scale: 1.14, duration: 3.75, ease: "sine.inOut" }, 9.45);
+        
+
+      tl.fromTo("#s4-cta", { y: 26, opacity: 0, scale: 0.92 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 8.6);
+      tl.to("#s4-cta .cta-pill", { scale: 1.05, duration: 0.55, yoyo: true, repeat: 3, ease: "sine.inOut" }, 9.6);
+    
+          tl.set({}, {}, 13.2);
+          window.__timelines["scene-04-unboxing"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

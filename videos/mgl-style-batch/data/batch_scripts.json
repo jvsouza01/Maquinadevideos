@@ -1,0 +1,515 @@
+{
+  "voice": "pt-BR-AntonioNeural",
+  "rate": "+18%",
+  "bgm": "assets/audio/bgm.mp3",
+  "videos": [
+    {
+      "slug": "01-ranking-ia-validados",
+      "title": "Top 3 Produtos de IA Validados no Checkout",
+      "scenes": [
+        {
+          "id": "s1-hook",
+          "theme": "light",
+          "pose": "confident",
+          "pose_cues": [
+            { "word": "modela", "pose": "point" }
+          ],
+          "prop": "split-wheel-checklist",
+          "propData": {
+            "cues": ["vende", "modela", "funciona"]
+          },
+          "sfx": "whoosh-short",
+          "headline": {
+            "mode": "split",
+            "left": ["reinventando", "a roda"],
+            "right": ["modelando", "o que vende"],
+            "rightHighlightLine": 0,
+            "highlightCue": "modela"
+          },
+          "narration": "Tem gente reinventando a roda, e tem gente que vende e modela o que já funciona."
+        },
+        {
+          "id": "s2-pain",
+          "theme": "dark",
+          "pose": "peek",
+          "pose_cues": [
+            { "word": "torra", "pose": "broke" }
+          ],
+          "prop": "comparison_doors",
+          "propData": {
+            "doors": [
+              { "icon": "flame", "cue_word": "chute", "stamp": "cash" },
+              { "icon": "arc", "cue_word": "plataformas", "stamp": "cash" },
+              { "icon": "cactus", "cue_word": "torra", "stamp": "x" }
+            ]
+          },
+          "sfx": "pop",
+          "emphasis": "torra",
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "chute",
+            "lines": [
+              { "text": "no chute", "highlight": true }
+            ]
+          },
+          "narration": "Se você sobe oferta no chute, testa três plataformas e torra grana à toa."
+        },
+        {
+          "id": "s3-spy",
+          "theme": "lime",
+          "pose": "peek",
+          "prop": "door-crowd",
+          "propData": {
+            "openCue": "espia",
+            "crowdCue": "gente"
+          },
+          "sfx": "impact-bass-1",
+          "shake": true,
+          "emphasis": "checkout",
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "lines": [
+              { "text": "quanta gente", "highlight": false },
+              { "text": "entra no checkout", "highlight": false }
+            ]
+          },
+          "narration": "Quem escala de verdade espia antes quanta gente entra no checkout todo dia."
+        },
+        {
+          "id": "s4-dashboard",
+          "theme": "light",
+          "pose": "magnify",
+          "prop": "cards_stack",
+          "propData": {
+            "items": [
+              { "title": "1º AI LAB STUDIO", "badge": "23.2k", "active": true, "cue_word": "três" },
+              { "title": "2º FLUXO AUTÔNOMO", "badge": "10.3k", "active": false, "cue_word": "inteligência" },
+              { "title": "3º CLONE DE VOZ", "badge": "8.7k", "active": false, "cue_word": "acessados" },
+              { "title": "4º CÓDIGO DA IA", "badge": "6.1k", "active": false, "cue_word": "momento" }
+            ]
+          },
+          "sfx": "click",
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "spy",
+            "lines": [
+              { "text": "a spy", "highlight": true },
+              { "text": "os checkouts de IA", "highlight": false },
+              { "text": "mais acessados", "highlight": false }
+            ]
+          },
+          "narration": "A spy abre os três produtos de inteligência artificial mais acessados do momento."
+        },
+        {
+          "id": "s5-rank3",
+          "theme": "dark",
+          "pose": "point",
+          "pose_cues": [
+            { "word": "order", "pose": "shock" }
+          ],
+          "prop": "offer_showcase",
+          "propData": {
+            "tag": "R$ 197",
+            "label": "CLONE IA PRO",
+            "bumps": 2,
+            "tagCue": "nove",
+            "bumpCue": "order"
+          },
+          "sfx": "pop",
+          "emphasis": "nove",
+          "headline": {
+            "mode": "stack",
+            "badge": "3º",
+            "highlightCue": "nove",
+            "lines": [
+              { "text": "Clone de Voz IA", "highlight": false },
+              { "text": "8.768 no checkout", "highlight": true },
+              { "text": "R$ 197 + 2 bumps", "highlight": false, "cue_word": "order" }
+            ]
+          },
+          "narration": "Em terceiro lugar, Clone de Voz com quase nove mil visitas e dois order bumps."
+        },
+        {
+          "id": "s6-rank2",
+          "theme": "light",
+          "pose": "laptop",
+          "prop": "flow_steps",
+          "propData": {
+            "steps": [
+              { "label": "PROMPT", "cue_word": "segundo" },
+              { "label": "FLUXO IA", "cue_word": "Fluxo" },
+              { "label": "ESCALA", "cue_word": "dez" }
+            ],
+            "outCue": "código"
+          },
+          "sfx": "notification",
+          "headline": {
+            "mode": "stack",
+            "badge": "2º",
+            "highlightCue": "dez",
+            "lines": [
+              { "text": "FLUXO AUTÔNOMO", "highlight": false },
+              { "text": "10.377 no checkout", "highlight": true },
+              { "text": "R$ 297", "highlight": false, "cue_word": "código" }
+            ]
+          },
+          "narration": "Em segundo, Fluxo Autônomo passando de dez mil acessos vendendo automação sem código."
+        },
+        {
+          "id": "s7-rank1-cta",
+          "theme": "lime",
+          "pose": "shock",
+          "pose_cues": [
+            { "word": "Toca", "pose": "celebrate" }
+          ],
+          "prop": "bar_chart",
+          "propData": {
+            "bars": [
+              { "h": 130, "cue_word": "primeiro" },
+              { "h": 170, "cue_word": "primeiro" },
+              { "h": 212, "cue_word": "bateu" },
+              { "h": 258, "cue_word": "vinte" },
+              { "h": 318, "winner": true, "count": 23206, "cue_word": "checkout" }
+            ],
+            "ctaCue": "ranking"
+          },
+          "sfx": "sparkle",
+          "emphasis": "ranking",
+          "headline": {
+            "mode": "stack",
+            "badge": "1º",
+            "lines": [
+              { "text": "AI LAB STUDIO", "highlight": false },
+              { "text": "23.206 no checkout", "highlight": false },
+              { "text": "ver ranking completo", "highlight": "dark-pill", "cue_word": "Toca" }
+            ]
+          },
+          "narration": "E o primeiro bateu vinte e três mil no checkout! Toca pra ver o ranking completo."
+        }
+      ]
+    },
+    {
+      "slug": "02-clones-digitais-escala",
+      "title": "Como Criar Vídeos em Massa com IA",
+      "scenes": [
+        {
+          "id": "s1-hook",
+          "theme": "dark",
+          "pose": "shock",
+          "pose_cues": [
+            { "word": "cinquenta", "pose": "celebrate" }
+          ],
+          "prop": "metrics_board",
+          "propData": {
+            "kpis": [
+              { "label": "ROTEIRO", "target": 1, "prefix": "", "suffix": "x", "cue_word": "único" },
+              { "label": "VÍDEOS", "target": 50, "prefix": "+", "suffix": "", "cue_word": "cinquenta" }
+            ]
+          },
+          "sfx": "impact-bass-1",
+          "shake": true,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "cinquenta",
+            "lines": [
+              { "text": "1 roteiro", "highlight": false },
+              { "text": "50 vídeos prontos", "highlight": true }
+            ]
+          },
+          "narration": "Você escreve um único JSON e gera cinquenta vídeos em minutos."
+        },
+        {
+          "id": "s2-how",
+          "theme": "light",
+          "pose": "laptop",
+          "prop": "flow_steps",
+          "propData": {
+            "steps": [
+              { "label": "TTS VOZ", "cue_word": "voz" },
+              { "label": "WORD CUE", "cue_word": "legenda" },
+              { "label": "MP4 9:16", "cue_word": "sozinha" }
+            ],
+            "outCue": "sozinha"
+          },
+          "sfx": "click",
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "voz",
+            "lines": [
+              { "text": "voz + legenda", "highlight": true },
+              { "text": "100% automático", "highlight": false }
+            ]
+          },
+          "narration": "A voz entra no tempo certo e a legenda marca cada palavra sozinha."
+        },
+        {
+          "id": "s3-cta",
+          "theme": "lime",
+          "pose": "point",
+          "pose_cues": [
+            { "word": "rápido", "pose": "celebrate" }
+          ],
+          "prop": "versus_grid",
+          "propData": {
+            "leftTitle": "MANUAL",
+            "rightTitle": "10X LOTE",
+            "leftCue": "assim",
+            "rightCue": "rápido"
+          },
+          "sfx": "sparkle",
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "lines": [
+              { "text": "escala real", "highlight": false },
+              { "text": "testar lote agora", "highlight": "dark-pill", "cue_word": "dez" }
+            ]
+          },
+          "narration": "É assim que quem domina o feed testa dez vezes mais rápido."
+        }
+      ]
+    },
+    {
+      "slug": "03-revenue-clean-marina",
+      "primary": true,
+      "title": "Marina — Revenue Clean (Aroma Íntimo)",
+      "voice": "pt-BR-FranciscaNeural",
+      "rate": "+12%",
+      "scenes": [
+        {
+          "id": "s1-elevator-hook",
+          "theme": "dark",
+          "pose": "marina_neutral",
+          "pose_cues": [
+            { "word": "cheiro", "pose": "marina_clutch" }
+          ],
+          "prop": "elevator_incident",
+          "propData": {
+            "alertCue": "sentindo",
+            "quoteCue": "cheiro"
+          },
+          "sfx": "whoosh-short",
+          "shake": true,
+          "emphasis": "cheiro",
+          "bgm_vol": 0.03,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "cheiro",
+            "lines": [
+              { "text": "Elevador lotado", "highlight": false },
+              { "text": "sentindo esse cheiro?", "highlight": true }
+            ]
+          },
+          "dialogue": [
+            {
+              "text": "Elevador lotado. As portas fechando.",
+              "voice": "pt-BR-ThalitaMultilingualNeural",
+              "rate": "+14%",
+              "pitch": "+0Hz"
+            },
+            {
+              "text": "Gente, vocês tão sentindo esse cheiro?",
+              "voice": "pt-BR-ThalitaMultilingualNeural",
+              "rate": "+10%",
+              "pitch": "+5Hz"
+            }
+          ]
+        },
+        {
+          "id": "s2-elevator-off",
+          "theme": "light",
+          "pose": "marina_clutch",
+          "pose_cues": [
+            { "word": "sido", "pose": "marina_sad" }
+          ],
+          "prop": "office_clock_thought",
+          "propData": {
+            "dayCue": "resto",
+            "thoughtCue": "sido"
+          },
+          "sfx": "click",
+          "bgm_vol": 0.02,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "sido",
+            "lines": [
+              { "text": "Ninguém olhou", "highlight": false },
+              { "text": "devia ter sido eu", "highlight": true }
+            ]
+          },
+          "narration": "Ninguém olhou pra mim. Eu passei o resto do dia achando que devia ter sido eu.",
+          "voice": "pt-BR-FranciscaNeural",
+          "rate": "+10%",
+          "pitch": "-1Hz"
+        },
+        {
+          "id": "s3-office-chat",
+          "theme": "dark",
+          "pose": "marina_phone",
+          "prop": "chat_rewrite",
+          "propData": {
+            "inCue": "Almoço",
+            "draftCue": "indo",
+            "deleteCue": "apaga",
+            "finalCue": "hoje"
+          },
+          "sfx": "notification",
+          "bgm_vol": 0.04,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "hoje",
+            "lines": [
+              { "text": "Almoço com a gente?", "highlight": false },
+              { "text": "hoje não consigo", "highlight": true, "cue_word": "apaga" }
+            ]
+          },
+          "narration": "No escritório chega a mensagem: Almoço com a gente? Ela digita tô indo, apaga e responde: hoje não consigo.",
+          "voice": "pt-BR-ThalitaMultilingualNeural",
+          "rate": "+14%"
+        },
+        {
+          "id": "s4-odor-isolation",
+          "theme": "light",
+          "pose": "marina_sad",
+          "prop": "flow_steps",
+          "propData": {
+            "steps": [
+              { "label": "FIM DO DIA", "cue_word": "fim" },
+              { "label": "INSEGURANÇA", "cue_word": "comentário" },
+              { "label": "ISOLAMENTO", "cue_word": "longe" }
+            ],
+            "outCue": "amigas"
+          },
+          "sfx": "click",
+          "bgm_vol": 0.04,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "amigas",
+            "lines": [
+              { "text": "Odor no fim do dia", "highlight": false },
+              { "text": "longe das amigas", "highlight": true, "cue_word": "longe" }
+            ]
+          },
+          "narration": "Às vezes eu percebia um odor íntimo mais forte no fim do dia. Depois daquele comentário, comecei a arrumar desculpa até pra ficar longe das minhas amigas.",
+          "voice": "pt-BR-FranciscaNeural",
+          "rate": "+12%"
+        },
+        {
+          "id": "s5-copa-talk",
+          "theme": "dark",
+          "pose": "marina_coffee",
+          "pose_cues": [
+            { "word": "medo", "pose": "marina_sad" }
+          ],
+          "prop": "copa_coffee_talk",
+          "propData": {
+            "questionCue": "fugindo",
+            "answerCue": "medo"
+          },
+          "sfx": "pop",
+          "emphasis": "cheiro",
+          "bgm_vol": 0.05,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "medo",
+            "lines": [
+              { "text": "Na copa, café frio", "highlight": false },
+              { "text": "medo do meu cheiro", "highlight": true, "cue_word": "medo" }
+            ]
+          },
+          "dialogue": [
+            {
+              "text": "Você tá fugindo de mim?",
+              "voice": "pt-BR-ThalitaMultilingualNeural",
+              "rate": "+10%",
+              "pitch": "+3Hz"
+            },
+            {
+              "text": "De você, não. É que tem dias em que eu fico com medo de alguém sentir meu cheiro.",
+              "voice": "pt-BR-FranciscaNeural",
+              "rate": "+10%",
+              "pitch": "-1Hz"
+            }
+          ]
+        },
+        {
+          "id": "s6-copa-support",
+          "theme": "light",
+          "pose": "marina_coffee",
+          "pose_cues": [
+            { "word": "sentar", "pose": "marina_relieved" }
+          ],
+          "prop": "copa_chairs_support",
+          "propData": {
+            "chairCue": "puxa",
+            "sitCue": "sentar"
+          },
+          "sfx": "whoosh-short",
+          "bgm_vol": 0.10,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "highlightCue": "aqui",
+            "lines": [
+              { "text": "A amiga acolhe", "highlight": false },
+              { "text": "Posso sentar aqui?", "highlight": true, "cue_word": "sentar" }
+            ]
+          },
+          "dialogue": [
+            {
+              "text": "A amiga puxa uma cadeira.",
+              "voice": "pt-BR-FranciscaNeural",
+              "rate": "+12%",
+              "pitch": "+0Hz"
+            },
+            {
+              "text": "Tá. Posso sentar aqui com você?",
+              "voice": "pt-BR-ThalitaMultilingualNeural",
+              "rate": "+8%",
+              "pitch": "+3Hz"
+            }
+          ]
+        },
+        {
+          "id": "s7-revenue-clean",
+          "theme": "lime",
+          "pose": "marina_phone",
+          "pose_cues": [
+            { "word": "Revenue", "pose": "marina_confident" }
+          ],
+          "prop": "revenue_clean_showcase",
+          "propData": {
+            "msgCue": "indo",
+            "prodCue": "Revenue",
+            "ctaCue": "Saiba"
+          },
+          "sfx": "sparkle",
+          "emphasis": "Revenue",
+          "bgm_vol": 0.14,
+          "headline": {
+            "mode": "stack",
+            "badge": null,
+            "lines": [
+              { "text": "Revenue Clean", "highlight": false },
+              { "text": "Aroma Íntimo", "highlight": false },
+              { "text": "Toque em Saiba mais", "highlight": "dark-pill", "cue_word": "Saiba" }
+            ]
+          },
+          "narration": "No dia seguinte, Marina envia tô indo. Conheça Revenue Clean, um produto voltado ao aroma íntimo. Toque em Saiba mais para ver a proposta e as orientações de uso.",
+          "voice": "pt-BR-ThalitaMultilingualNeural",
+          "rate": "+13%"
+        }
+      ]
+    }
+  ]
+}

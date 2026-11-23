@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          font-family: "Sora", sans-serif;
+          background: #0E1016;
+        }
+        .shot {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        .shot-cam {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          transform-origin: 50% 42%;
+        }
+        .shot-media {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .cinematic-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 44%, rgba(0,0,0,0) 54%, rgba(8,10,15,0.48) 100%);
+          pointer-events: none;
+        }
+        
+      .elev-door-edge-l, .elev-door-edge-r {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50.5%;
+        background: linear-gradient(90deg, #323A47 0%, #586375 55%, #2D3440 100%);
+        z-index: 25;
+        pointer-events: none;
+      }
+      .elev-door-edge-l { left: 0; border-right: 5px solid #161A22; }
+      .elev-door-edge-r { right: 0; border-left: 5px solid #161A22; }
+      .elev-cool-glow {
+        position: absolute;
+        top: 0;
+        left: 120px;
+        right: 120px;
+        height: 360px;
+        background: radial-gradient(ellipse at 50% 0%, rgba(196,222,250,0.28) 0%, rgba(196,222,250,0) 75%);
+        pointer-events: none;
+        z-index: 12;
+      }
+      .filaments-layer {
+        position: absolute;
+        left: 390px;
+        top: 1120px;
+        width: 300px;
+        height: 380px;
+        z-index: 16;
+        pointer-events: none;
+        filter: blur(5px);
+      }
+    
+      </style>
+
+      <div id="root" data-composition-id="scene-01-elevator" data-width="1080" data-height="1920">
+        
+      <div id="s1-wide" class="shot">
+        <div id="s1-wide-cam" class="shot-cam">
+          <video id="vid-shot_1a" class="shot-media" src="assets/clips/shot_1a.mp4" data-start="0.0" data-duration="5.4" data-playback-rate="0.9" data-track-index="1" muted playsinline preload="auto"></video>
+        </div>
+        <div class="elev-cool-glow"></div>
+        <!-- Dois filamentos cinza-esverdeados muito transparentes junto a calca de Marina -->
+        <div id="s1-filaments" class="filaments-layer" data-layout-ignore="true">
+          <svg viewBox="0 0 300 380" width="300" height="380">
+            <path d="M122 340 C96 270 156 220 126 146 C106 96 138 56 130 22" fill="none" stroke="rgba(148, 176, 156, 0.34)" stroke-width="18" stroke-linecap="round"/>
+            <path d="M178 350 C206 276 154 228 188 156 C208 112 172 70 186 30" fill="none" stroke="rgba(136, 164, 145, 0.28)" stroke-width="14" stroke-linecap="round"/>
+          </svg>
+        </div>
+        
+        <div class="cinematic-vignette"></div>
+      </div>
+
+      <div id="s1-close" class="shot">
+        <div id="s1-close-cam" class="shot-cam">
+          <video id="vid-shot_1b" class="shot-media" src="assets/clips/shot_1b.mp4" data-start="5.4" data-duration="2.1" data-track-index="1" muted playsinline preload="auto"></video>
+        </div>
+        <div class="elev-cool-glow"></div>
+        <div class="cinematic-vignette"></div>
+      </div>
+    
+      </div>
+
+      <script>
+        (function () {
+          var tl = gsap.timeline({ paused: true });
+          
+      
+      // Enquadramento acima dos joelhos
+      tl.fromTo("#s1-wide-cam", { scale: 1.12, yPercent: 4 }, { scale: 1.15, yPercent: 3, duration: 5.4, ease: "sine.inOut" }, 0);
+
+      // Dois filamentos cinza-esverdeados sobem discretamente e se dissipam (1.0 -> 3.05s)
+      tl.fromTo("#s1-filaments",
+        { y: 42, x: 0, opacity: 0, scaleY: 0.85 },
+        { y: -44, x: 14, opacity: 0.85, scaleY: 1.05, duration: 1.1, ease: "sine.out" },
+        1.0
+      );
+      tl.to("#s1-filaments", { y: -115, x: 34, opacity: 0, scaleX: 1.18, duration: 0.95, ease: "sine.in" }, 2.1);
+
+      // Corte para Plano 1B (5.4s): close em Marina apertando a bolsa caramelo
+      tl.set("#s1-close", { opacity: 0 }, 0);
+      tl.set("#s1-close", { opacity: 1 }, 5.4);
+      tl.set("#s1-wide", { opacity: 0 }, 5.4);
+      tl.fromTo("#s1-close-cam", { scale: 1.0 }, { scale: 1.02, duration: 2.1, ease: "sine.out" }, 5.4);
+    
+          tl.set({}, {}, 7.5);
+          window.__timelines["scene-01-elevator"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

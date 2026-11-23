@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>O Comentário no Elevador — Revenue Clean (3D Pixar)</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Sora";
+        src: url("assets/fonts/sora-600-latin.woff2") format("woff2");
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Sora";
+        src: url("assets/fonts/sora-700-latin.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Sora";
+        src: url("assets/fonts/sora-800-latin.woff2") format("woff2");
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; overflow: hidden; background: #0E1016; font-family: "Sora", sans-serif; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #0E1016; }
+      .scene-slot { position: absolute; inset: 0; width: 100%; height: 100%; }
+      #captions-layer {
+        position: absolute;
+        left: 96px;
+        right: 96px;
+        bottom: 340px;
+        height: 120px;
+        z-index: 60;
+        pointer-events: none;
+      }
+      .cap-slot {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .cap-slot.cap-high {
+        transform: translateY(-75px);
+      }
+      .cap-pill {
+        padding: 14px 28px;
+        border-radius: 18px;
+        background: rgba(14, 17, 24, 0.86);
+        border: 1.5px solid rgba(255, 255, 255, 0.14);
+        color: #F4F6FA;
+        font-size: 34px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+        box-shadow: 0 10px 26px rgba(0,0,0,0.38);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="44.8"
+      data-width="1080"
+      data-height="1920"
+      data-fx-chain='{&quot;version&quot;:1,&quot;nodes&quot;:[{&quot;type&quot;:&quot;limiter&quot;,&quot;id&quot;:&quot;m_lim&quot;,&quot;label&quot;:&quot;Master Ceiling&quot;,&quot;params&quot;:{&quot;limit&quot;:-1,&quot;attack&quot;:5,&quot;release&quot;:50,&quot;level_out&quot;:0}}]}'
+    >
+      <hf-audio-group
+        id="voiceover"
+        data-label="Voiceover"
+        data-volume="1"
+        data-fx-chain='{&quot;version&quot;:1,&quot;nodes&quot;:[{&quot;type&quot;:&quot;highpass&quot;,&quot;id&quot;:&quot;vo_hp&quot;,&quot;label&quot;:&quot;Remove Rumble&quot;,&quot;params&quot;:{&quot;frequency&quot;:90,&quot;q&quot;:0.707,&quot;poles&quot;:&quot;2&quot;}},{&quot;type&quot;:&quot;compressor&quot;,&quot;id&quot;:&quot;vo_comp&quot;,&quot;label&quot;:&quot;Voice Leveler&quot;,&quot;params&quot;:{&quot;threshold&quot;:-18,&quot;ratio&quot;:3.2}}]}'
+      ></hf-audio-group>
+
+      <div id="slot-s1" class="clip scene-slot" data-composition-id="scene-01-elevator" data-composition-src="compositions/scene-01-elevator.html" data-start="0.0" data-duration="7.5" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="slot-s2" class="clip scene-slot" data-composition-id="scene-02-office" data-composition-src="compositions/scene-02-office.html" data-start="7.5" data-duration="10.1" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="slot-s3" class="clip scene-slot" data-composition-id="scene-03-copa" data-composition-src="compositions/scene-03-copa.html" data-start="17.6" data-duration="14.0" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="slot-s4" class="clip scene-slot" data-composition-id="scene-04-unboxing" data-composition-src="compositions/scene-04-unboxing.html" data-start="31.6" data-duration="13.2" data-track-index="0" data-width="1080" data-height="1920"></div>
+
+      <div id="captions-layer" data-layout-allow-caption-zone="true">
+        
+        <div
+          id="cap-c1_passageira-0"
+          class="clip cap-slot"
+          data-start="2.399"
+          data-duration="1.689"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">Gente vocês tão sentindo</div>
+        </div>
+        <div
+          id="cap-c1_passageira-1"
+          class="clip cap-slot"
+          data-start="4.103"
+          data-duration="1.099"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">um cheiro estranho</div>
+        </div>
+        <div
+          id="cap-c2_marina_off-0"
+          class="clip cap-slot"
+          data-start="7.945"
+          data-duration="1.031"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">Eu já tinha percebido</div>
+        </div>
+        <div
+          id="cap-c2_marina_off-1"
+          class="clip cap-slot"
+          data-start="8.991"
+          data-duration="0.928"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">que às vezes meu</div>
+        </div>
+        <div
+          id="cap-c2_marina_off-2"
+          class="clip cap-slot"
+          data-start="9.934"
+          data-duration="1.281"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">cheiro íntimo ficava mais</div>
+        </div>
+        <div
+          id="cap-c2_marina_off-3"
+          class="clip cap-slot"
+          data-start="11.23"
+          data-duration="0.746"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">forte no fim do</div>
+        </div>
+        <div
+          id="cap-c2_marina_off-4"
+          class="clip cap-slot"
+          data-start="11.991"
+          data-duration="1.889"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">dia Depois daquele comentário</div>
+        </div>
+        <div
+          id="cap-c2_marina_off-5"
+          class="clip cap-slot"
+          data-start="13.895"
+          data-duration="1.088"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">comecei até a inventar</div>
+        </div>
+        <div
+          id="cap-c2_marina_off-6"
+          class="clip cap-slot"
+          data-start="14.998"
+          data-duration="1.202"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">desculpa pro café</div>
+        </div>
+        <div
+          id="cap-c3_bia_1-0"
+          class="clip cap-slot"
+          data-start="19.647"
+          data-duration="0.964"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">Você tá fugindo de</div>
+        </div>
+        <div
+          id="cap-c3_bia_1-1"
+          class="clip cap-slot"
+          data-start="20.626"
+          data-duration="0.463"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">mim</div>
+        </div>
+        <div
+          id="cap-c3_marina_2-0"
+          class="clip cap-slot"
+          data-start="21.997"
+          data-duration="1.091"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">De você não É</div>
+        </div>
+        <div
+          id="cap-c3_marina_2-1"
+          class="clip cap-slot"
+          data-start="23.103"
+          data-duration="0.716"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">que tem dias em</div>
+        </div>
+        <div
+          id="cap-c3_marina_2-2"
+          class="clip cap-slot"
+          data-start="23.834"
+          data-duration="0.586"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">que eu fico com</div>
+        </div>
+        <div
+          id="cap-c3_marina_2-3"
+          class="clip cap-slot"
+          data-start="24.435"
+          data-duration="1.035"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">medo de alguém sentir</div>
+        </div>
+        <div
+          id="cap-c3_marina_2-4"
+          class="clip cap-slot"
+          data-start="25.485"
+          data-duration="0.758"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">meu cheiro</div>
+        </div>
+        <div
+          id="cap-c3_bia_3-0"
+          class="clip cap-slot"
+          data-start="27.361"
+          data-duration="1.48"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">Tá Posso sentar aqui</div>
+        </div>
+        <div
+          id="cap-c3_bia_3-1"
+          class="clip cap-slot"
+          data-start="28.856"
+          data-duration="0.732"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">com você</div>
+        </div>
+        <div
+          id="cap-c4_marina_off-0"
+          class="clip cap-slot"
+          data-start="32.045"
+          data-duration="1.088"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">Quando chegou eu tava</div>
+        </div>
+        <div
+          id="cap-c4_marina_off-1"
+          class="clip cap-slot"
+          data-start="33.148"
+          data-duration="1.019"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">tão curiosa que abri</div>
+        </div>
+        <div
+          id="cap-c4_marina_off-2"
+          class="clip cap-slot"
+          data-start="34.182"
+          data-duration="1.144"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">ali mesmo antes de</div>
+        </div>
+        <div
+          id="cap-c4_marina_off-3"
+          class="clip cap-slot"
+          data-start="35.341"
+          data-duration="1.044"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">tirar o casaco</div>
+        </div>
+        <div
+          id="cap-c4_locucao-0"
+          class="clip cap-slot cap-high"
+          data-start="37.355"
+          data-duration="1.882"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">Conheça Revenue Clean voltado</div>
+        </div>
+        <div
+          id="cap-c4_locucao-1"
+          class="clip cap-slot cap-high"
+          data-start="39.252"
+          data-duration="1.377"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">ao aroma íntimo Toque</div>
+        </div>
+        <div
+          id="cap-c4_locucao-2"
+          class="clip cap-slot cap-high"
+          data-start="40.644"
+          data-duration="0.852"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">em Saiba mais para</div>
+        </div>
+        <div
+          id="cap-c4_locucao-3"
+          class="clip cap-slot cap-high"
+          data-start="41.511"
+          data-duration="1.004"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">conhecer o produto e</div>
+        </div>
+        <div
+          id="cap-c4_locucao-4"
+          class="clip cap-slot cap-high"
+          data-start="42.53"
+          data-duration="1.334"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">conferir as orientações de</div>
+        </div>
+        <div
+          id="cap-c4_locucao-5"
+          class="clip cap-slot cap-high"
+          data-start="43.879"
+          data-duration="0.487"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="cap-pill">uso</div>
+        </div>
+      </div>
+
+      <audio id="bgm" src="assets/audio/generated/bgm_45s.mp3" data-start="0" data-duration="44.8" data-track-index="11" data-volume="0.11" data-automation='{"version": 1, "lanes": [{"target": "volume", "points": [{"t": 0.0, "v": 0.11}, {"t": 5.35, "v": 0.11}, {"t": 5.4, "v": 0.003}, {"t": 5.92, "v": 0.003}, {"t": 6.12, "v": 0.07}, {"t": 17.6, "v": 0.08}, {"t": 31.6, "v": 0.12}, {"t": 44.0, "v": 0.12}, {"t": 44.8, "v": 0.02}]}]}'></audio>
+      
+      <audio
+        id="vo-c1_passageira"
+        src="assets/audio/generated/c1_passageira.mp3"
+        data-audio-group="voiceover"
+        data-start="2.35"
+        data-duration="3.024"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="vo-c2_marina_off"
+        src="assets/audio/generated/c2_marina_off.mp3"
+        data-audio-group="voiceover"
+        data-start="7.85"
+        data-duration="8.976"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="vo-c3_bia_1"
+        src="assets/audio/generated/c3_bia_1.mp3"
+        data-audio-group="voiceover"
+        data-start="19.6"
+        data-duration="1.872"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="vo-c3_marina_2"
+        src="assets/audio/generated/c3_marina_2.mp3"
+        data-audio-group="voiceover"
+        data-start="21.9"
+        data-duration="4.992"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="vo-c3_bia_3"
+        src="assets/audio/generated/c3_bia_3.mp3"
+        data-audio-group="voiceover"
+        data-start="27.3"
+        data-duration="2.448"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="vo-c4_marina_off"
+        src="assets/audio/generated/c4_marina_off.mp3"
+        data-audio-group="voiceover"
+        data-start="31.95"
+        data-duration="5.04"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="vo-c4_locucao"
+        src="assets/audio/generated/c4_locucao.mp3"
+        data-audio-group="voiceover"
+        data-start="37.3"
+        data-duration="7.2"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      
+      <audio id="fx-ding" src="assets/audio/generated/foley_elevator_ding.wav" data-start="0.4" data-duration="1.15" data-track-index="12" data-volume="0.42"></audio>
+      <audio id="fx-strap" src="assets/audio/generated/foley_leather_squeeze.wav" data-start="5.45" data-duration="0.65" data-track-index="13" data-volume="0.52"></audio>
+      <audio id="fx-chair" src="assets/audio/generated/foley_chair_slide.wav" data-start="27.0" data-duration="0.85" data-track-index="12" data-volume="0.40"></audio>
+      <audio id="fx-tape" src="assets/audio/generated/foley_tape_peel.wav" data-start="32.0" data-duration="1.05" data-track-index="13" data-volume="0.48"></audio>
+    
+    </div>
+
+    <script>
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+        tl.set({}, {}, 44.8);
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+# Dependencies & environments
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.env
+.env.*
+.DS_Store
+Thumbs.db
+*.log
+
+# Scratch, archives & raw local inputs
+scratch/
+*.zip
+nov. 21 - 18_48/
+img02.jpeg
+img03.jpeg
+
+# Rendered videos, audio tracks & raw media (personal/produced media stays local)
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.avi
+*.wav
+*.mp3
+*.ogg
+*.m4a
+*.flac
+
+# HyperFrames local state, caches, renders & web captures
+videos/*/.hyperframes/
+videos/*/renders/
+videos/*/capture/
+
+# Generated/produced pipeline media assets
+videos/revenue-clean-pixar/assets/clips/
+videos/revenue-clean-pixar/assets/shots/
+videos/revenue-clean-pixar/assets/audio/generated/
+videos/mgl-style-batch/assets/audio/generated/
+videos/relampeja-edit/validation_frames/
+videos/relampeja-edit/assets/cards/
+videos/relampeja-edit/assets/panels/
+videos/relampeja-edit/assets/*.jpg
+videos/relampeja-edit/assets/*.jpeg
+videos/vistarumo-promo/assets/contact-sheet-*.jpg
+
+# WhatsApp Reels debug/preview frames & temporary video
+videos/whatsapp-reels/*_frame_*.png
+videos/whatsapp-reels/prev_*.png
+videos/whatsapp-reels/ref_*.png
+videos/whatsapp-reels/preview_*.png
+videos/whatsapp-reels/temp_video.mp4

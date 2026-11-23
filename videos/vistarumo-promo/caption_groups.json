@@ -1,0 +1,616 @@
+{
+  "total_duration_s": 22.7,
+  "width": 1920,
+  "height": 1080,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.1,
+      "end": 0.882,
+      "text": "Fala,",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Fala,",
+          "start": 0.1,
+          "end": 0.882
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 0.882,
+      "end": 1.926,
+      "text": "Xerife!",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "Xerife!",
+          "start": 0.882,
+          "end": 1.976
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 1.926,
+      "end": 2.4,
+      "text": "Você já",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "Você",
+          "start": 1.926,
+          "end": 2.242
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "já",
+          "start": 2.242,
+          "end": 2.4
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 1,
+      "start": 2.4,
+      "end": 3.428,
+      "text": "estuda com foco",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "estuda",
+          "start": 2.4,
+          "end": 2.875
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "com",
+          "start": 2.875,
+          "end": 3.112
+        },
+        {
+          "id": "caption-word-3-2",
+          "text": "foco",
+          "start": 3.112,
+          "end": 3.428
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 1,
+      "start": 3.428,
+      "end": 4.734,
+      "text": "e disciplina todos",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "e",
+          "start": 3.428,
+          "end": 3.548
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "disciplina",
+          "start": 3.548,
+          "end": 4.338
+        },
+        {
+          "id": "caption-word-4-2",
+          "text": "todos",
+          "start": 4.338,
+          "end": 4.734
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 1,
+      "start": 4.734,
+      "end": 5.366,
+      "text": "os dias.",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "os",
+          "start": 4.734,
+          "end": 4.892
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "dias.",
+          "start": 4.892,
+          "end": 5.246
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 5.4,
+      "end": 6.696,
+      "text": "Conheça a Vista",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "Conheça",
+          "start": 5.4,
+          "end": 6.086
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "a",
+          "start": 6.086,
+          "end": 6.206
+        },
+        {
+          "id": "caption-word-6-2",
+          "text": "Vista",
+          "start": 6.206,
+          "end": 6.696
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 6.696,
+      "end": 7.114,
+      "text": "Rumo.",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "Rumo.",
+          "start": 6.696,
+          "end": 7.164
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 7.114,
+      "end": 8.238,
+      "text": "Vista seu caminho",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "Vista",
+          "start": 7.114,
+          "end": 7.489
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "seu",
+          "start": 7.489,
+          "end": 7.713
+        },
+        {
+          "id": "caption-word-8-2",
+          "text": "caminho",
+          "start": 7.713,
+          "end": 8.238
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 2,
+      "start": 8.238,
+      "end": 8.687,
+      "text": "rumo ao",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "rumo",
+          "start": 8.238,
+          "end": 8.537
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "ao",
+          "start": 8.537,
+          "end": 8.687
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 2,
+      "start": 8.687,
+      "end": 9.631,
+      "text": "seu destino.",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "seu",
+          "start": 8.687,
+          "end": 8.912
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "destino.",
+          "start": 8.912,
+          "end": 9.511
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 3,
+      "start": 9.7,
+      "end": 11.19,
+      "text": "Camisetas casuais e linha",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "Camisetas",
+          "start": 9.7,
+          "end": 10.287
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "casuais",
+          "start": 10.287,
+          "end": 10.743
+        },
+        {
+          "id": "caption-word-11-2",
+          "text": "e",
+          "start": 10.743,
+          "end": 10.864
+        },
+        {
+          "id": "caption-word-11-3",
+          "text": "linha",
+          "start": 10.864,
+          "end": 11.19
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 3,
+      "start": 11.19,
+      "end": 12.298,
+      "text": "tática com proteção",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "tática",
+          "start": 11.19,
+          "end": 11.581
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "com",
+          "start": 11.581,
+          "end": 11.777
+        },
+        {
+          "id": "caption-word-12-2",
+          "text": "proteção",
+          "start": 11.777,
+          "end": 12.298
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 3,
+      "start": 12.298,
+      "end": 13.342,
+      "text": "UV cinquenta mais,",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "UV",
+          "start": 12.298,
+          "end": 12.429
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "cinquenta",
+          "start": 12.429,
+          "end": 13.016
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "mais,",
+          "start": 13.016,
+          "end": 13.342
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 3,
+      "start": 13.342,
+      "end": 13.929,
+      "text": "feitas pra",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "feitas",
+          "start": 13.342,
+          "end": 13.733
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "pra",
+          "start": 13.733,
+          "end": 13.929
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 3,
+      "start": 13.929,
+      "end": 14.516,
+      "text": "sua rotina",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "sua",
+          "start": 13.929,
+          "end": 14.124
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "rotina",
+          "start": 14.124,
+          "end": 14.516
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 3,
+      "start": 14.516,
+      "end": 15.103,
+      "text": "de estudos",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "de",
+          "start": 14.516,
+          "end": 14.646
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "estudos",
+          "start": 14.646,
+          "end": 15.103
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 3,
+      "start": 15.103,
+      "end": 15.614,
+      "text": "e treino",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "e",
+          "start": 15.103,
+          "end": 15.223
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "treino",
+          "start": 15.223,
+          "end": 15.614
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 3,
+      "start": 15.614,
+      "end": 16.081,
+      "text": "pro TAF.",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "pro",
+          "start": 15.614,
+          "end": 15.81
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "TAF.",
+          "start": 15.81,
+          "end": 15.961
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 4,
+      "start": 16.1,
+      "end": 16.987,
+      "text": "E aproveite:",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "E",
+          "start": 16.1,
+          "end": 16.22
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "aproveite:",
+          "start": 16.22,
+          "end": 16.987
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 4,
+      "start": 16.987,
+      "end": 18.137,
+      "text": "frete grátis para",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "frete",
+          "start": 16.987,
+          "end": 17.37
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "grátis",
+          "start": 17.37,
+          "end": 17.83
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "para",
+          "start": 17.83,
+          "end": 18.137
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 4,
+      "start": 18.137,
+      "end": 19.178,
+      "text": "todo o Nordeste",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "todo",
+          "start": 18.137,
+          "end": 18.444
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "o",
+          "start": 18.444,
+          "end": 18.564
+        },
+        {
+          "id": "caption-word-21-2",
+          "text": "Nordeste",
+          "start": 18.564,
+          "end": 19.178
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 4,
+      "start": 19.178,
+      "end": 19.758,
+      "text": "a partir",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "a",
+          "start": 19.178,
+          "end": 19.298
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "partir",
+          "start": 19.298,
+          "end": 19.758
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 4,
+      "start": 19.758,
+      "end": 20.218,
+      "text": "de duas",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "de",
+          "start": 19.758,
+          "end": 19.911
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "duas",
+          "start": 19.911,
+          "end": 20.218
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 4,
+      "start": 20.218,
+      "end": 20.498,
+      "text": "peças.",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "peças.",
+          "start": 20.218,
+          "end": 20.548
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 4,
+      "start": 20.498,
+      "end": 21.543,
+      "text": "Clique no link",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "Clique",
+          "start": 20.498,
+          "end": 21.021
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "no",
+          "start": 21.021,
+          "end": 21.195
+        },
+        {
+          "id": "caption-word-25-2",
+          "text": "link",
+          "start": 21.195,
+          "end": 21.543
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 4,
+      "start": 21.543,
+      "end": 22.708,
+      "text": "da descrição!",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "da",
+          "start": 21.543,
+          "end": 21.717
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "descrição!",
+          "start": 21.717,
+          "end": 22.588
+        }
+      ]
+    }
+  ]
+}

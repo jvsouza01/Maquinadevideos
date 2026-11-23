@@ -1,0 +1,2097 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Como Criar Vídeos em Massa com IA</title>
+    <script src="../assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Sora";
+        src: url("../assets/fonts/sora-400-latin.woff2") format("woff2");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Sora";
+        src: url("../assets/fonts/sora-600-latin.woff2") format("woff2");
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Sora";
+        src: url("../assets/fonts/sora-700-latin.woff2") format("woff2");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Sora";
+        src: url("../assets/fonts/sora-800-latin.woff2") format("woff2");
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #0F1017;
+        font-family: "Sora", sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #0F1017;
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        color: var(--ink);
+      }
+      .scene-curtain, .scene-camera, .layer-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .scene-camera {
+        transform-origin: 50% 48%;
+      }
+      .scene-bg-wall {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 61.5%;
+        background: var(--wall);
+      }
+      .scene-bg-floor {
+        position: absolute;
+        top: 61.5%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--floor);
+      }
+      .scene-horizon {
+        position: absolute;
+        top: 61.5%;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--horizon);
+        z-index: 5;
+      }
+      .headline-zone {
+        position: absolute;
+        top: 300px;
+        left: 120px;
+        right: 120px;
+        z-index: 15;
+      }
+      .headline-split {
+        display: flex;
+        align-items: flex-start;
+        gap: 24px;
+      }
+      .split-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .split-divider {
+        width: 3px;
+        height: 210px;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+      .hl-line, .hl-row {
+        font-size: 54px;
+        font-weight: 800;
+        line-height: 1.16;
+        letter-spacing: -0.04em;
+        color: var(--ink);
+      }
+      .headline-split .hl-line {
+        font-size: 44px;
+      }
+      .headline-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .hl-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 20px;
+        border-radius: 14px;
+        font-size: 60px;
+        font-weight: 800;
+        line-height: 1.08;
+      }
+      .hl-sweep-wrap {
+        position: relative;
+        display: inline-block;
+        padding: 4px 18px;
+        border-radius: 14px;
+        overflow: hidden;
+        line-height: 1.14;
+      }
+      .hl-pill-round {
+        border-radius: 999px;
+        padding: 10px 28px;
+        font-size: 44px;
+      }
+      .hl-sweep-base {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+      }
+      .hl-sweep-bar {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        border-radius: inherit;
+        transform-origin: left center;
+      }
+      .hl-sweep-fg {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        padding: inherit;
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .stage-prop {
+        position: absolute;
+        left: 68px;
+        top: 675px;
+        width: 510px;
+        height: 440px;
+        z-index: 10;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .prop-svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      .mascot-wrap {
+        position: absolute;
+        right: 44px;
+        top: 678px;
+        width: 460px;
+        height: 620px;
+        z-index: 20;
+      }
+      .mascot-pose-slot {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .mascot-svg, .mascot-png-sticker {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: bottom center;
+        overflow: visible;
+      }
+      #captions-layer {
+        position: absolute;
+        top: 1035px;
+        left: 64px;
+        right: 110px;
+        height: 110px;
+        z-index: 50;
+        pointer-events: none;
+      }
+      .caption-slot {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .caption-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 12px 22px;
+        border-radius: 20px;
+        background: rgba(17, 19, 26, 0.94);
+        border: 2px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.34);
+      }
+      .cap-word {
+        display: inline-block;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: #E2E6F0;
+        padding: 4px 10px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="mgl-style"
+      data-start="0"
+      data-duration="12.154"
+      data-width="1080"
+      data-height="1920"
+      data-fx-chain='{&quot;version&quot;:1,&quot;nodes&quot;:[{&quot;type&quot;:&quot;limiter&quot;,&quot;id&quot;:&quot;m_lim&quot;,&quot;label&quot;:&quot;Master Ceiling&quot;,&quot;params&quot;:{&quot;limit&quot;:-1,&quot;attack&quot;:5,&quot;release&quot;:50,&quot;level_out&quot;:0}}]}'
+    >
+      <hf-audio-group
+        id="voiceover"
+        data-label="Voiceover"
+        data-volume="1"
+        data-fx-chain='{&quot;version&quot;:1,&quot;nodes&quot;:[{&quot;type&quot;:&quot;highpass&quot;,&quot;id&quot;:&quot;vo_hp&quot;,&quot;label&quot;:&quot;Remove Rumble&quot;,&quot;params&quot;:{&quot;frequency&quot;:90,&quot;q&quot;:0.707,&quot;poles&quot;:&quot;2&quot;}},{&quot;type&quot;:&quot;compressor&quot;,&quot;id&quot;:&quot;vo_comp&quot;,&quot;label&quot;:&quot;Voice Leveler&quot;,&quot;params&quot;:{&quot;threshold&quot;:-18,&quot;ratio&quot;:3.2}}]}'
+      ></hf-audio-group>
+
+      
+      <section
+        id="scene-0-s1-hook"
+        class="clip scene theme-dark"
+        data-start="0.0"
+        data-duration="4.028"
+        data-track-index="0"
+        style="--wall:#0F1017;--floor:#171821;--horizon:#FFFFFF;--ink:#FFFFFF;"
+      >
+        <div class="scene-curtain">
+          <div class="scene-camera">
+            <div class="layer-bg">
+              <div class="scene-bg-wall"></div>
+              <div class="scene-bg-floor"></div>
+              <div class="scene-horizon"></div>
+            </div>
+            <div class="headline-zone">
+              <div class="headline-stack"><div class="hl-row anim-hl">1 roteiro</div><div class="hl-row anim-hl"><span class="hl-sweep-wrap" data-hl-cue-time="1.734" data-layout-allow-overlap="true"><span class="hl-sweep-base">50 vídeos prontos</span><span class="hl-sweep-bar" style="background:#D0EB2F;"></span><span class="hl-sweep-fg" style="color:#11131A;" aria-hidden="true" data-layout-ignore="true">50 vídeos prontos</span></span></div></div>
+            </div>
+            <div class="stage-prop layer-prop" data-layout-ignore="true">
+              <svg class="prop-svg" viewBox="0 0 500 420" width="500" height="420">
+            <g data-cue-step="1" data-cue-anim="pop-overshoot" data-cue-fallback="0.25" data-cue-word="único" data-cue-sfx="pop" style="transform-origin: 132px 220px;" data-cue-time="0.866">
+              <rect x="34" y="120" width="196" height="200" rx="24" fill="#FFFFFF" stroke="#14161D" stroke-width="5"/>
+              <rect x="54" y="144" width="108" height="28" rx="14" fill="#D0EB2F"/>
+              <text x="108" y="163" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="14">ROTEIRO</text>
+              <text class="cue-count-up" data-count-target="1" data-count-prefix="" data-count-suffix="x" x="132" y="252" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="38" style="font-variant-numeric: tabular-nums;">1x</text>
+            </g>
+            <g data-cue-step="2" data-cue-anim="pop-overshoot" data-cue-fallback="0.50" data-cue-word="cinquenta" data-cue-sfx="pop" style="transform-origin: 350px 220px;" data-cue-time="1.734">
+              <rect x="252" y="120" width="196" height="200" rx="24" fill="#FFFFFF" stroke="#14161D" stroke-width="5"/>
+              <rect x="272" y="144" width="108" height="28" rx="14" fill="#D0EB2F"/>
+              <text x="326" y="163" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="14">VÍDEOS</text>
+              <text class="cue-count-up" data-count-target="50" data-count-prefix="+" data-count-suffix="" x="350" y="252" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="38" style="font-variant-numeric: tabular-nums;">+50</text>
+            </g></svg>
+            </div>
+            <div class="mascot-wrap layer-mascot" data-layout-ignore="true">
+              
+    <div class="mascot-pose-slot" data-pose="shock">
+      <svg class="mascot-svg" viewBox="0 0 420 580" width="420" height="580">
+        <defs>
+          <linearGradient id="st-0-0-shock-skin" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F7BA8E"/>
+            <stop offset="70%" stop-color="#EEA271"/>
+            <stop offset="100%" stop-color="#DC8652"/>
+          </linearGradient>
+          <linearGradient id="st-0-0-shock-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#383C4A"/>
+            <stop offset="65%" stop-color="#252832"/>
+            <stop offset="100%" stop-color="#171920"/>
+          </linearGradient>
+          <linearGradient id="st-0-0-shock-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3E271C"/>
+            <stop offset="100%" stop-color="#20120B"/>
+          </linearGradient>
+          <filter id="st-0-0-shock-outline" x="-22%" y="-22%" width="144%" height="144%">
+            <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="10"/>
+            <feFlood flood-color="#FFFFFF" flood-opacity="1" result="WHITE"/>
+            <feComposite in="WHITE" in2="DILATED" operator="in" result="OUTLINE"/>
+            <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000000" flood-opacity="0.30" result="SHADOW"/>
+            <feMerge>
+              <feMergeNode in="SHADOW"/>
+              <feMergeNode in="OUTLINE"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sombra independente reativa ao squash & stretch -->
+        <ellipse class="mascot-shadow" cx="210" cy="548" rx="112" ry="16" fill="rgba(0,0,0,0.24)"/>
+
+        <g class="mascot-body-rig" filter="url(#st-0-0-shock-outline)" style="transform-origin: 210px 526px;">
+          <!-- Pernas + Sombreamento joelho -->
+          <rect x="164" y="424" width="28" height="72" rx="12" fill="url(#st-0-0-shock-skin)" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="228" y="424" width="28" height="72" rx="12" fill="url(#st-0-0-shock-skin)" stroke="#1E130D" stroke-width="3.5"/>
+
+          <!-- Tenis 2.5D -->
+          <g>
+            <path d="M142 508 Q140 486 164 484 L194 486 Q204 494 202 516 L146 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="142" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="162" y1="494" x2="180" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+
+            <path d="M218 516 Q216 494 226 486 L256 484 Q280 486 278 508 L274 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="216" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="240" y1="494" x2="258" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Shorts com highlight -->
+          <path d="M150 388 L270 388 L276 442 L222 442 L210 422 L198 442 L144 442 Z" fill="#1D1F27" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+
+          <!-- Bracos articulados independentes -->
+          <g class="mascot-arm-l" style="transform-origin: 148px 326px;">
+            
+            <path d="M148 328 C114 316 112 270 132 246" fill="none" stroke="url(#st-0-0-shock-skin)" stroke-width="22" stroke-linecap="round"/>
+            <circle cx="134" cy="242" r="17" fill="url(#st-0-0-shock-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+          <g class="mascot-arm-r" style="transform-origin: 272px 326px;">
+            
+            <path d="M272 328 C306 316 308 270 288 246" fill="none" stroke="url(#st-0-0-shock-skin)" stroke-width="22" stroke-linecap="round"/>
+            <circle cx="286" cy="242" r="17" fill="url(#st-0-0-shock-skin)" stroke="#1E130D" stroke-width="3"/>
+            <circle cx="294" cy="278" r="9" fill="#2A2D36" stroke="#111" stroke-width="2"/>
+          </g>
+
+          <!-- Tronco + Rim Light -->
+          <g class="mascot-torso" style="transform-origin: 210px 395px;">
+            <path d="M144 302 Q210 290 276 302 L292 344 L268 354 L270 398 L150 398 L152 354 L128 344 Z" fill="url(#st-0-0-shock-shirt)" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M164 316 Q210 330 256 316" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M182 300 Q210 318 238 300" fill="none" stroke="#14161D" stroke-width="4"/>
+          </g>
+
+          <!-- Cabeca Articulada (pivote no pescoco) -->
+          <g class="mascot-head-rig" style="transform-origin: 210px 286px;">
+            <rect x="192" y="276" width="36" height="30" rx="10" fill="#D88858" stroke="#1E130D" stroke-width="3"/>
+            <ellipse cx="106" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+            <ellipse cx="314" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+
+            <!-- Rosto 2.5D -->
+            <path d="M112 162 C112 96 308 96 308 162 C308 232 284 282 210 282 C136 282 112 232 112 162 Z" fill="url(#st-0-0-shock-skin)" stroke="#1E130D" stroke-width="4"/>
+            <!-- Rubor sutil nas bochechas -->
+            <ellipse cx="148" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+            <ellipse cx="272" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+
+            <!-- Cabelo volumetrico -->
+            <path d="M108 172 C100 106 132 58 210 56 C288 58 320 106 312 172 C304 142 284 122 252 124 C236 114 218 126 198 120 C172 112 148 126 128 134 C116 144 112 154 108 172 Z" fill="url(#st-0-0-shock-hair)" stroke="#160B06" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M150 82 Q178 68 206 78 M218 76 Q246 66 270 84" fill="none" stroke="#5A3929" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Barba -->
+            <path d="M114 196 C114 252 152 284 210 284 C268 284 306 252 306 196 C298 220 278 232 252 230 C236 226 224 222 210 222 C196 222 184 226 168 230 C142 232 122 220 114 196 Z" fill="#24150E" stroke="#160B06" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="210" cy="252" rx="34" ry="18" fill="#F2AB7E"/>
+            <path d="M178 236 Q210 222 242 236 Q230 246 210 242 Q190 246 178 236 Z" fill="#24150E"/>
+            <path d="M204 206 Q210 222 218 212" fill="none" stroke="#C47444" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- Sobrancelhas -->
+            <g class="mascot-brows" style="transform-origin: 210px 160px;">
+              
+        <path d="M146 154 Q168 140 188 154" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+        <path d="M234 154 Q254 140 276 154" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Olhos + Palpebras para piscada natural -->
+            <g class="mascot-eyes" style="transform-origin: 210px 193px;">
+              
+        <ellipse cx="170" cy="190" rx="22" ry="22" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="171" cy="190" r="12" fill="#23140E"/>
+        <circle cx="166" cy="184" r="4.2" fill="#FFFFFF"/>
+        <ellipse cx="250" cy="190" rx="22" ry="22" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="249" cy="190" r="12" fill="#23140E"/>
+        <circle cx="244" cy="184" r="4.2" fill="#FFFFFF"/>
+              <g class="mascot-eyelids" opacity="0">
+                <path d="M150 193 Q170 202 190 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+                <path d="M230 193 Q250 202 270 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- Boca sincronizada com WordBoundary (lip-sync) -->
+            <g class="mascot-mouth" style="transform-origin: 210px 252px;">
+              
+        <ellipse cx="210" cy="255" rx="16" ry="15" fill="#5E1D1B" stroke="#1E130D" stroke-width="3.5"/>
+        <path d="M199 246 Q210 249 221 246" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="210" cy="263" rx="9" ry="5" fill="#E06D6D"/>
+            </g>
+          </g>
+
+          <!-- Prop do mascote (lupa / venda / laptop) -->
+          <g class="mascot-prop" style="transform-origin: 210px 260px;">
+            
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="mascot-pose-slot" data-pose="celebrate">
+      <svg class="mascot-svg" viewBox="0 0 420 580" width="420" height="580">
+        <defs>
+          <linearGradient id="st-0-1-celebrate-skin" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F7BA8E"/>
+            <stop offset="70%" stop-color="#EEA271"/>
+            <stop offset="100%" stop-color="#DC8652"/>
+          </linearGradient>
+          <linearGradient id="st-0-1-celebrate-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#383C4A"/>
+            <stop offset="65%" stop-color="#252832"/>
+            <stop offset="100%" stop-color="#171920"/>
+          </linearGradient>
+          <linearGradient id="st-0-1-celebrate-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3E271C"/>
+            <stop offset="100%" stop-color="#20120B"/>
+          </linearGradient>
+          <filter id="st-0-1-celebrate-outline" x="-22%" y="-22%" width="144%" height="144%">
+            <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="10"/>
+            <feFlood flood-color="#FFFFFF" flood-opacity="1" result="WHITE"/>
+            <feComposite in="WHITE" in2="DILATED" operator="in" result="OUTLINE"/>
+            <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000000" flood-opacity="0.30" result="SHADOW"/>
+            <feMerge>
+              <feMergeNode in="SHADOW"/>
+              <feMergeNode in="OUTLINE"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sombra independente reativa ao squash & stretch -->
+        <ellipse class="mascot-shadow" cx="210" cy="548" rx="112" ry="16" fill="rgba(0,0,0,0.24)"/>
+
+        <g class="mascot-body-rig" filter="url(#st-0-1-celebrate-outline)" style="transform-origin: 210px 526px;">
+          <!-- Pernas + Sombreamento joelho -->
+          <rect x="164" y="424" width="28" height="72" rx="12" fill="url(#st-0-1-celebrate-skin)" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="228" y="424" width="28" height="72" rx="12" fill="url(#st-0-1-celebrate-skin)" stroke="#1E130D" stroke-width="3.5"/>
+
+          <!-- Tenis 2.5D -->
+          <g>
+            <path d="M142 508 Q140 486 164 484 L194 486 Q204 494 202 516 L146 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="142" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="162" y1="494" x2="180" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+
+            <path d="M218 516 Q216 494 226 486 L256 484 Q280 486 278 508 L274 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="216" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="240" y1="494" x2="258" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Shorts com highlight -->
+          <path d="M150 388 L270 388 L276 442 L222 442 L210 422 L198 442 L144 442 Z" fill="#1D1F27" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+
+          <!-- Bracos articulados independentes -->
+          <g class="mascot-arm-l" style="transform-origin: 148px 326px;">
+            
+            <path d="M148 326 C106 300 94 242 108 200" fill="none" stroke="url(#st-0-1-celebrate-skin)" stroke-width="22" stroke-linecap="round"/>
+            <circle cx="110" cy="194" r="17" fill="url(#st-0-1-celebrate-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+          <g class="mascot-arm-r" style="transform-origin: 272px 326px;">
+            
+            <path d="M272 326 C314 300 326 242 312 200" fill="none" stroke="url(#st-0-1-celebrate-skin)" stroke-width="22" stroke-linecap="round"/>
+            <circle cx="310" cy="194" r="17" fill="url(#st-0-1-celebrate-skin)" stroke="#1E130D" stroke-width="3"/>
+            <circle cx="316" cy="258" r="9" fill="#2A2D36" stroke="#111" stroke-width="2"/>
+          </g>
+
+          <!-- Tronco + Rim Light -->
+          <g class="mascot-torso" style="transform-origin: 210px 395px;">
+            <path d="M144 302 Q210 290 276 302 L292 344 L268 354 L270 398 L150 398 L152 354 L128 344 Z" fill="url(#st-0-1-celebrate-shirt)" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M164 316 Q210 330 256 316" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M182 300 Q210 318 238 300" fill="none" stroke="#14161D" stroke-width="4"/>
+          </g>
+
+          <!-- Cabeca Articulada (pivote no pescoco) -->
+          <g class="mascot-head-rig" style="transform-origin: 210px 286px;">
+            <rect x="192" y="276" width="36" height="30" rx="10" fill="#D88858" stroke="#1E130D" stroke-width="3"/>
+            <ellipse cx="106" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+            <ellipse cx="314" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+
+            <!-- Rosto 2.5D -->
+            <path d="M112 162 C112 96 308 96 308 162 C308 232 284 282 210 282 C136 282 112 232 112 162 Z" fill="url(#st-0-1-celebrate-skin)" stroke="#1E130D" stroke-width="4"/>
+            <!-- Rubor sutil nas bochechas -->
+            <ellipse cx="148" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+            <ellipse cx="272" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+
+            <!-- Cabelo volumetrico -->
+            <path d="M108 172 C100 106 132 58 210 56 C288 58 320 106 312 172 C304 142 284 122 252 124 C236 114 218 126 198 120 C172 112 148 126 128 134 C116 144 112 154 108 172 Z" fill="url(#st-0-1-celebrate-hair)" stroke="#160B06" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M150 82 Q178 68 206 78 M218 76 Q246 66 270 84" fill="none" stroke="#5A3929" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Barba -->
+            <path d="M114 196 C114 252 152 284 210 284 C268 284 306 252 306 196 C298 220 278 232 252 230 C236 226 224 222 210 222 C196 222 184 226 168 230 C142 232 122 220 114 196 Z" fill="#24150E" stroke="#160B06" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="210" cy="252" rx="34" ry="18" fill="#F2AB7E"/>
+            <path d="M178 236 Q210 222 242 236 Q230 246 210 242 Q190 246 178 236 Z" fill="#24150E"/>
+            <path d="M204 206 Q210 222 218 212" fill="none" stroke="#C47444" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- Sobrancelhas -->
+            <g class="mascot-brows" style="transform-origin: 210px 160px;">
+              
+        <path d="M146 154 Q168 140 188 154" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+        <path d="M234 154 Q254 140 276 154" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Olhos + Palpebras para piscada natural -->
+            <g class="mascot-eyes" style="transform-origin: 210px 193px;">
+              
+        <ellipse cx="170" cy="190" rx="22" ry="22" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="171" cy="190" r="12" fill="#23140E"/>
+        <circle cx="166" cy="184" r="4.2" fill="#FFFFFF"/>
+        <ellipse cx="250" cy="190" rx="22" ry="22" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="249" cy="190" r="12" fill="#23140E"/>
+        <circle cx="244" cy="184" r="4.2" fill="#FFFFFF"/>
+              <g class="mascot-eyelids" opacity="0">
+                <path d="M150 193 Q170 202 190 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+                <path d="M230 193 Q250 202 270 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- Boca sincronizada com WordBoundary (lip-sync) -->
+            <g class="mascot-mouth" style="transform-origin: 210px 252px;">
+              
+        <ellipse cx="210" cy="255" rx="16" ry="15" fill="#5E1D1B" stroke="#1E130D" stroke-width="3.5"/>
+        <path d="M199 246 Q210 249 221 246" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="210" cy="263" rx="9" ry="5" fill="#E06D6D"/>
+            </g>
+          </g>
+
+          <!-- Prop do mascote (lupa / venda / laptop) -->
+          <g class="mascot-prop" style="transform-origin: 210px 260px;">
+            
+          </g>
+        </g>
+      </svg>
+    </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="scene-1-s2-how"
+        class="clip scene theme-light"
+        data-start="4.028"
+        data-duration="4.172"
+        data-track-index="0"
+        style="--wall:#EAEBEE;--floor:#D4D8E0;--horizon:#14161D;--ink:#11131A;"
+      >
+        <div class="scene-curtain">
+          <div class="scene-camera">
+            <div class="layer-bg">
+              <div class="scene-bg-wall"></div>
+              <div class="scene-bg-floor"></div>
+              <div class="scene-horizon"></div>
+            </div>
+            <div class="headline-zone">
+              <div class="headline-stack"><div class="hl-row anim-hl"><span class="hl-sweep-wrap" data-hl-cue-time="4.248" data-layout-allow-overlap="true"><span class="hl-sweep-base">voz + legenda</span><span class="hl-sweep-bar" style="background:#D0EB2F;"></span><span class="hl-sweep-fg" style="color:#11131A;" aria-hidden="true" data-layout-ignore="true">voz + legenda</span></span></div><div class="hl-row anim-hl">100% automático</div></div>
+            </div>
+            <div class="stage-prop layer-prop" data-layout-ignore="true">
+              
+        <svg class="prop-svg" viewBox="0 0 500 420" width="500" height="420">
+          <!-- Paths desenhados via stroke-dashoffset no cue -->
+          <path class="cue-stroke-draw" data-cue-step="1" data-cue-anim="stroke-draw" data-cue-fallback="0.20" data-cue-word="voz" d="M138 220 C190 220 190 128 246 128" fill="none" stroke="#8C93A3" stroke-width="5" stroke-linecap="round" data-cue-time="4.248" />
+          <path class="cue-stroke-draw" data-cue-step="2" data-cue-anim="stroke-draw" data-cue-fallback="0.38" data-cue-word="legenda" d="M138 220 L246 220" fill="none" stroke="#D0EB2F" stroke-width="6" stroke-linecap="round" data-cue-time="5.572" />
+          <path class="cue-stroke-draw" data-cue-step="3" data-cue-anim="stroke-draw" data-cue-fallback="0.54" data-cue-word="sozinha" d="M138 220 C190 220 190 312 246 312" fill="none" stroke="#8C93A3" stroke-width="5" stroke-linecap="round" data-cue-time="6.8" />
+          <path class="cue-stroke-draw" data-cue-step="4" data-cue-anim="stroke-draw" data-cue-fallback="0.72" data-cue-word="sozinha" d="M380 220 L406 220" fill="none" stroke="#D0EB2F" stroke-width="6" stroke-linecap="round" data-cue-time="6.8" />
+
+          <g class="prop-base" style="transform-origin: 92px 220px;">
+            <rect x="44" y="176" width="96" height="88" rx="20" fill="#1F2330" stroke="#FFFFFF" stroke-width="4"/>
+            <circle cx="92" cy="212" r="18" fill="#D0EB2F"/>
+            <rect x="66" y="240" width="52" height="8" rx="4" fill="#FFFFFF"/>
+          </g>
+          <g data-cue-step="1" data-cue-anim="pop-overshoot" data-cue-fallback="0.22" data-cue-word="voz" data-cue-sfx="click" style="transform-origin: 312px 128px;" data-cue-time="4.248">
+            <rect x="244" y="92" width="136" height="72" rx="18" fill="#FFFFFF" stroke="#14161D" stroke-width="4"/>
+            <text x="312" y="134" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="14">TTS VOZ</text>
+          </g>
+          <g data-cue-step="2" data-cue-anim="pop-overshoot" data-cue-fallback="0.40" data-cue-word="legenda" data-cue-sfx="pop" style="transform-origin: 312px 220px;" data-cue-time="5.572">
+            <rect x="244" y="184" width="136" height="72" rx="18" fill="#D0EB2F" stroke="#14161D" stroke-width="4"/>
+            <text x="312" y="226" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="14">WORD CUE</text>
+          </g>
+          <g data-cue-step="3" data-cue-anim="pop-overshoot" data-cue-fallback="0.56" data-cue-word="sozinha" style="transform-origin: 312px 312px;" data-cue-time="6.8">
+            <rect x="244" y="276" width="136" height="72" rx="18" fill="#FFFFFF" stroke="#14161D" stroke-width="4"/>
+            <text x="312" y="318" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="14">MP4 9:16</text>
+          </g>
+          <g data-cue-step="4" data-cue-anim="pop-spin" data-cue-fallback="0.74" data-cue-word="sozinha" data-cue-sfx="click" style="transform-origin: 444px 220px;" data-cue-time="6.8">
+            <rect x="406" y="172" width="76" height="96" rx="20" fill="#1F2330" stroke="#D0EB2F" stroke-width="4"/>
+            <path d="M428 220 L440 232 L460 206" fill="none" stroke="#D0EB2F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </svg>
+            </div>
+            <div class="mascot-wrap layer-mascot" data-layout-ignore="true">
+              
+    <div class="mascot-pose-slot" data-pose="laptop">
+      <svg class="mascot-svg" viewBox="0 0 420 580" width="420" height="580">
+        <defs>
+          <linearGradient id="st-1-0-laptop-skin" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F7BA8E"/>
+            <stop offset="70%" stop-color="#EEA271"/>
+            <stop offset="100%" stop-color="#DC8652"/>
+          </linearGradient>
+          <linearGradient id="st-1-0-laptop-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#383C4A"/>
+            <stop offset="65%" stop-color="#252832"/>
+            <stop offset="100%" stop-color="#171920"/>
+          </linearGradient>
+          <linearGradient id="st-1-0-laptop-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3E271C"/>
+            <stop offset="100%" stop-color="#20120B"/>
+          </linearGradient>
+          <filter id="st-1-0-laptop-outline" x="-22%" y="-22%" width="144%" height="144%">
+            <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="10"/>
+            <feFlood flood-color="#FFFFFF" flood-opacity="1" result="WHITE"/>
+            <feComposite in="WHITE" in2="DILATED" operator="in" result="OUTLINE"/>
+            <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000000" flood-opacity="0.30" result="SHADOW"/>
+            <feMerge>
+              <feMergeNode in="SHADOW"/>
+              <feMergeNode in="OUTLINE"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sombra independente reativa ao squash & stretch -->
+        <ellipse class="mascot-shadow" cx="210" cy="548" rx="112" ry="16" fill="rgba(0,0,0,0.24)"/>
+
+        <g class="mascot-body-rig" filter="url(#st-1-0-laptop-outline)" style="transform-origin: 210px 526px;">
+          <!-- Pernas + Sombreamento joelho -->
+          <rect x="164" y="424" width="28" height="72" rx="12" fill="url(#st-1-0-laptop-skin)" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="228" y="424" width="28" height="72" rx="12" fill="url(#st-1-0-laptop-skin)" stroke="#1E130D" stroke-width="3.5"/>
+
+          <!-- Tenis 2.5D -->
+          <g>
+            <path d="M142 508 Q140 486 164 484 L194 486 Q204 494 202 516 L146 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="142" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="162" y1="494" x2="180" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+
+            <path d="M218 516 Q216 494 226 486 L256 484 Q280 486 278 508 L274 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="216" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="240" y1="494" x2="258" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Shorts com highlight -->
+          <path d="M150 388 L270 388 L276 442 L222 442 L210 422 L198 442 L144 442 Z" fill="#1D1F27" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+
+          <!-- Bracos articulados independentes -->
+          <g class="mascot-arm-l" style="transform-origin: 148px 326px;">
+            
+        <path d="M148 328 C126 346 132 374 158 378" fill="none" stroke="url(#st-1-0-laptop-skin)" stroke-width="22" stroke-linecap="round"/>
+        <circle cx="164" cy="378" r="15" fill="url(#st-1-0-laptop-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+          <g class="mascot-arm-r" style="transform-origin: 272px 326px;">
+            
+        <path d="M272 326 C318 292 326 202 284 152" fill="none" stroke="url(#st-1-0-laptop-skin)" stroke-width="22" stroke-linecap="round"/>
+        <circle cx="280" cy="148" r="16" fill="url(#st-1-0-laptop-skin)" stroke="#1E130D" stroke-width="3"/>
+        <circle cx="308" cy="230" r="9" fill="#2A2D36" stroke="#111" stroke-width="2"/>
+          </g>
+
+          <!-- Tronco + Rim Light -->
+          <g class="mascot-torso" style="transform-origin: 210px 395px;">
+            <path d="M144 302 Q210 290 276 302 L292 344 L268 354 L270 398 L150 398 L152 354 L128 344 Z" fill="url(#st-1-0-laptop-shirt)" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M164 316 Q210 330 256 316" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M182 300 Q210 318 238 300" fill="none" stroke="#14161D" stroke-width="4"/>
+          </g>
+
+          <!-- Cabeca Articulada (pivote no pescoco) -->
+          <g class="mascot-head-rig" style="transform-origin: 210px 286px;">
+            <rect x="192" y="276" width="36" height="30" rx="10" fill="#D88858" stroke="#1E130D" stroke-width="3"/>
+            <ellipse cx="106" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+            <ellipse cx="314" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+
+            <!-- Rosto 2.5D -->
+            <path d="M112 162 C112 96 308 96 308 162 C308 232 284 282 210 282 C136 282 112 232 112 162 Z" fill="url(#st-1-0-laptop-skin)" stroke="#1E130D" stroke-width="4"/>
+            <!-- Rubor sutil nas bochechas -->
+            <ellipse cx="148" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+            <ellipse cx="272" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+
+            <!-- Cabelo volumetrico -->
+            <path d="M108 172 C100 106 132 58 210 56 C288 58 320 106 312 172 C304 142 284 122 252 124 C236 114 218 126 198 120 C172 112 148 126 128 134 C116 144 112 154 108 172 Z" fill="url(#st-1-0-laptop-hair)" stroke="#160B06" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M150 82 Q178 68 206 78 M218 76 Q246 66 270 84" fill="none" stroke="#5A3929" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Barba -->
+            <path d="M114 196 C114 252 152 284 210 284 C268 284 306 252 306 196 C298 220 278 232 252 230 C236 226 224 222 210 222 C196 222 184 226 168 230 C142 232 122 220 114 196 Z" fill="#24150E" stroke="#160B06" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="210" cy="252" rx="34" ry="18" fill="#F2AB7E"/>
+            <path d="M178 236 Q210 222 242 236 Q230 246 210 242 Q190 246 178 236 Z" fill="#24150E"/>
+            <path d="M204 206 Q210 222 218 212" fill="none" stroke="#C47444" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- Sobrancelhas -->
+            <g class="mascot-brows" style="transform-origin: 210px 160px;">
+              
+        <path d="M146 158 Q168 148 188 158" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+        <path d="M234 158 Q254 148 276 158" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Olhos + Palpebras para piscada natural -->
+            <g class="mascot-eyes" style="transform-origin: 210px 193px;">
+              
+        <ellipse cx="170" cy="192" rx="19" ry="18" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="171" cy="193" r="11" fill="#23140E"/>
+        <circle cx="166" cy="187" r="4" fill="#FFFFFF"/>
+        <ellipse cx="250" cy="192" rx="19" ry="18" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="249" cy="193" r="11" fill="#23140E"/>
+        <circle cx="244" cy="187" r="4" fill="#FFFFFF"/>
+              <g class="mascot-eyelids" opacity="0">
+                <path d="M150 193 Q170 202 190 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+                <path d="M230 193 Q250 202 270 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- Boca sincronizada com WordBoundary (lip-sync) -->
+            <g class="mascot-mouth" style="transform-origin: 210px 252px;">
+              
+        <path d="M190 245 Q210 272 230 245 Z" fill="#5E1D1B" stroke="#1E130D" stroke-width="3.5"/>
+        <path d="M195 246 Q210 250 225 246" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </g>
+          </g>
+
+          <!-- Prop do mascote (lupa / venda / laptop) -->
+          <g class="mascot-prop" style="transform-origin: 210px 260px;">
+            
+        <polygon points="140,350 280,350 270,418 150,418" fill="#2B2E38" stroke="#11131A" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="210" cy="384" r="7" fill="#D0EB2F"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="scene-2-s3-cta"
+        class="clip scene theme-lime"
+        data-start="8.2"
+        data-duration="3.954"
+        data-track-index="0"
+        style="--wall:#D0EB2F;--floor:#B8D71A;--horizon:#14161D;--ink:#11131A;"
+      >
+        <div class="scene-curtain">
+          <div class="scene-camera">
+            <div class="layer-bg">
+              <div class="scene-bg-wall"></div>
+              <div class="scene-bg-floor"></div>
+              <div class="scene-horizon"></div>
+            </div>
+            <div class="headline-zone">
+              <div class="headline-stack"><div class="hl-row anim-hl">escala real</div><div class="hl-row anim-hl" data-line-cue-time="9.797"><span class="hl-sweep-wrap hl-pill-round" data-hl-cue-time="9.797" data-layout-allow-overlap="true"><span class="hl-sweep-base">testar lote agora</span><span class="hl-sweep-bar" style="background:#11131A;"></span><span class="hl-sweep-fg" style="color:#FFFFFF;" aria-hidden="true" data-layout-ignore="true">testar lote agora</span></span></div></div>
+            </div>
+            <div class="stage-prop layer-prop" data-layout-ignore="true">
+              
+        <svg class="prop-svg" viewBox="0 0 500 420" width="500" height="420">
+          <g data-cue-step="1" data-cue-anim="slide-left" data-cue-fallback="0.25" data-cue-word="assim" data-cue-sfx="click" style="transform-origin: 124px 230px;" data-cue-time="8.43">
+            <rect x="24" y="100" width="200" height="260" rx="24" fill="#FFFFFF" stroke="#14161D" stroke-width="5"/>
+            <text x="124" y="152" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="22">MANUAL</text>
+            <circle cx="124" cy="245" r="44" fill="#EF4444" stroke="#14161D" stroke-width="4"/>
+            <path d="M106 227 L142 263 M142 227 L106 263" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+          </g>
+          <g data-cue-step="2" data-cue-anim="pop-overshoot" data-cue-fallback="0.55" data-cue-word="rápido" data-cue-sfx="pop" style="transform-origin: 356px 230px;" data-cue-time="10.57">
+            <rect x="256" y="84" width="212" height="284" rx="24" fill="#D0EB2F" stroke="#14161D" stroke-width="5"/>
+            <text x="362" y="140" text-anchor="middle" fill="#14161D" font-family="Sora, sans-serif" font-weight="800" font-size="22">10X LOTE</text>
+            <circle cx="362" cy="242" r="48" fill="#14161D"/>
+            <path d="M340 242 L355 257 L386 224" fill="none" stroke="#D0EB2F" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </svg>
+            </div>
+            <div class="mascot-wrap layer-mascot" data-layout-ignore="true">
+              
+    <div class="mascot-pose-slot" data-pose="point">
+      <svg class="mascot-svg" viewBox="0 0 420 580" width="420" height="580">
+        <defs>
+          <linearGradient id="st-2-0-point-skin" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F7BA8E"/>
+            <stop offset="70%" stop-color="#EEA271"/>
+            <stop offset="100%" stop-color="#DC8652"/>
+          </linearGradient>
+          <linearGradient id="st-2-0-point-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#383C4A"/>
+            <stop offset="65%" stop-color="#252832"/>
+            <stop offset="100%" stop-color="#171920"/>
+          </linearGradient>
+          <linearGradient id="st-2-0-point-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3E271C"/>
+            <stop offset="100%" stop-color="#20120B"/>
+          </linearGradient>
+          <filter id="st-2-0-point-outline" x="-22%" y="-22%" width="144%" height="144%">
+            <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="10"/>
+            <feFlood flood-color="#FFFFFF" flood-opacity="1" result="WHITE"/>
+            <feComposite in="WHITE" in2="DILATED" operator="in" result="OUTLINE"/>
+            <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000000" flood-opacity="0.30" result="SHADOW"/>
+            <feMerge>
+              <feMergeNode in="SHADOW"/>
+              <feMergeNode in="OUTLINE"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sombra independente reativa ao squash & stretch -->
+        <ellipse class="mascot-shadow" cx="210" cy="548" rx="112" ry="16" fill="rgba(0,0,0,0.24)"/>
+
+        <g class="mascot-body-rig" filter="url(#st-2-0-point-outline)" style="transform-origin: 210px 526px;">
+          <!-- Pernas + Sombreamento joelho -->
+          <rect x="164" y="424" width="28" height="72" rx="12" fill="url(#st-2-0-point-skin)" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="228" y="424" width="28" height="72" rx="12" fill="url(#st-2-0-point-skin)" stroke="#1E130D" stroke-width="3.5"/>
+
+          <!-- Tenis 2.5D -->
+          <g>
+            <path d="M142 508 Q140 486 164 484 L194 486 Q204 494 202 516 L146 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="142" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="162" y1="494" x2="180" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+
+            <path d="M218 516 Q216 494 226 486 L256 484 Q280 486 278 508 L274 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="216" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="240" y1="494" x2="258" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Shorts com highlight -->
+          <path d="M150 388 L270 388 L276 442 L222 442 L210 422 L198 442 L144 442 Z" fill="#1D1F27" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+
+          <!-- Bracos articulados independentes -->
+          <g class="mascot-arm-l" style="transform-origin: 148px 326px;">
+            
+        <path d="M148 326 C112 330 96 290 100 250" fill="none" stroke="url(#st-2-0-point-skin)" stroke-width="23" stroke-linecap="round"/>
+        <rect x="93" y="206" width="14" height="36" rx="7" fill="url(#st-2-0-point-skin)" stroke="#1E130D" stroke-width="3"/>
+        <circle cx="102" cy="248" r="16" fill="url(#st-2-0-point-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+          <g class="mascot-arm-r" style="transform-origin: 272px 326px;">
+            
+        <path d="M272 326 C296 352 298 386 284 410" fill="none" stroke="url(#st-2-0-point-skin)" stroke-width="23" stroke-linecap="round"/>
+        <circle cx="284" cy="414" r="15" fill="url(#st-2-0-point-skin)" stroke="#1E130D" stroke-width="3"/>
+        <circle cx="291" cy="382" r="9" fill="#2A2D36" stroke="#111" stroke-width="2"/>
+          </g>
+
+          <!-- Tronco + Rim Light -->
+          <g class="mascot-torso" style="transform-origin: 210px 395px;">
+            <path d="M144 302 Q210 290 276 302 L292 344 L268 354 L270 398 L150 398 L152 354 L128 344 Z" fill="url(#st-2-0-point-shirt)" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M164 316 Q210 330 256 316" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M182 300 Q210 318 238 300" fill="none" stroke="#14161D" stroke-width="4"/>
+          </g>
+
+          <!-- Cabeca Articulada (pivote no pescoco) -->
+          <g class="mascot-head-rig" style="transform-origin: 210px 286px;">
+            <rect x="192" y="276" width="36" height="30" rx="10" fill="#D88858" stroke="#1E130D" stroke-width="3"/>
+            <ellipse cx="106" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+            <ellipse cx="314" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+
+            <!-- Rosto 2.5D -->
+            <path d="M112 162 C112 96 308 96 308 162 C308 232 284 282 210 282 C136 282 112 232 112 162 Z" fill="url(#st-2-0-point-skin)" stroke="#1E130D" stroke-width="4"/>
+            <!-- Rubor sutil nas bochechas -->
+            <ellipse cx="148" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+            <ellipse cx="272" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+
+            <!-- Cabelo volumetrico -->
+            <path d="M108 172 C100 106 132 58 210 56 C288 58 320 106 312 172 C304 142 284 122 252 124 C236 114 218 126 198 120 C172 112 148 126 128 134 C116 144 112 154 108 172 Z" fill="url(#st-2-0-point-hair)" stroke="#160B06" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M150 82 Q178 68 206 78 M218 76 Q246 66 270 84" fill="none" stroke="#5A3929" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Barba -->
+            <path d="M114 196 C114 252 152 284 210 284 C268 284 306 252 306 196 C298 220 278 232 252 230 C236 226 224 222 210 222 C196 222 184 226 168 230 C142 232 122 220 114 196 Z" fill="#24150E" stroke="#160B06" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="210" cy="252" rx="34" ry="18" fill="#F2AB7E"/>
+            <path d="M178 236 Q210 222 242 236 Q230 246 210 242 Q190 246 178 236 Z" fill="#24150E"/>
+            <path d="M204 206 Q210 222 218 212" fill="none" stroke="#C47444" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- Sobrancelhas -->
+            <g class="mascot-brows" style="transform-origin: 210px 160px;">
+              
+        <path d="M146 164 Q168 154 188 164" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+        <path d="M234 156 Q254 146 276 158" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Olhos + Palpebras para piscada natural -->
+            <g class="mascot-eyes" style="transform-origin: 210px 193px;">
+              
+        <ellipse cx="170" cy="193" rx="18" ry="17" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="172" cy="193" r="11" fill="#23140E"/>
+        <circle cx="167" cy="188" r="4" fill="#FFFFFF"/>
+        <ellipse cx="250" cy="193" rx="18" ry="17" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="248" cy="193" r="11" fill="#23140E"/>
+        <circle cx="243" cy="188" r="4" fill="#FFFFFF"/>
+              <g class="mascot-eyelids" opacity="0">
+                <path d="M150 193 Q170 202 190 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+                <path d="M230 193 Q250 202 270 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- Boca sincronizada com WordBoundary (lip-sync) -->
+            <g class="mascot-mouth" style="transform-origin: 210px 252px;">
+              
+        <path d="M194 249 Q210 261 226 249" fill="none" stroke="#1E130D" stroke-width="4.5" stroke-linecap="round"/>
+            </g>
+          </g>
+
+          <!-- Prop do mascote (lupa / venda / laptop) -->
+          <g class="mascot-prop" style="transform-origin: 210px 260px;">
+            
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="mascot-pose-slot" data-pose="celebrate">
+      <svg class="mascot-svg" viewBox="0 0 420 580" width="420" height="580">
+        <defs>
+          <linearGradient id="st-2-1-celebrate-skin" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#F7BA8E"/>
+            <stop offset="70%" stop-color="#EEA271"/>
+            <stop offset="100%" stop-color="#DC8652"/>
+          </linearGradient>
+          <linearGradient id="st-2-1-celebrate-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#383C4A"/>
+            <stop offset="65%" stop-color="#252832"/>
+            <stop offset="100%" stop-color="#171920"/>
+          </linearGradient>
+          <linearGradient id="st-2-1-celebrate-hair" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#3E271C"/>
+            <stop offset="100%" stop-color="#20120B"/>
+          </linearGradient>
+          <filter id="st-2-1-celebrate-outline" x="-22%" y="-22%" width="144%" height="144%">
+            <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="10"/>
+            <feFlood flood-color="#FFFFFF" flood-opacity="1" result="WHITE"/>
+            <feComposite in="WHITE" in2="DILATED" operator="in" result="OUTLINE"/>
+            <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#000000" flood-opacity="0.30" result="SHADOW"/>
+            <feMerge>
+              <feMergeNode in="SHADOW"/>
+              <feMergeNode in="OUTLINE"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Sombra independente reativa ao squash & stretch -->
+        <ellipse class="mascot-shadow" cx="210" cy="548" rx="112" ry="16" fill="rgba(0,0,0,0.24)"/>
+
+        <g class="mascot-body-rig" filter="url(#st-2-1-celebrate-outline)" style="transform-origin: 210px 526px;">
+          <!-- Pernas + Sombreamento joelho -->
+          <rect x="164" y="424" width="28" height="72" rx="12" fill="url(#st-2-1-celebrate-skin)" stroke="#1E130D" stroke-width="3.5"/>
+          <rect x="228" y="424" width="28" height="72" rx="12" fill="url(#st-2-1-celebrate-skin)" stroke="#1E130D" stroke-width="3.5"/>
+
+          <!-- Tenis 2.5D -->
+          <g>
+            <path d="M142 508 Q140 486 164 484 L194 486 Q204 494 202 516 L146 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="142" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="162" y1="494" x2="180" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+
+            <path d="M218 516 Q216 494 226 486 L256 484 Q280 486 278 508 L274 516 Z" fill="#F2ECE4" stroke="#1E130D" stroke-width="3.5" stroke-linejoin="round"/>
+            <rect x="216" y="512" width="62" height="14" rx="6" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+            <line x1="240" y1="494" x2="258" y2="494" stroke="#B7AEA2" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Shorts com highlight -->
+          <path d="M150 388 L270 388 L276 442 L222 442 L210 422 L198 442 L144 442 Z" fill="#1D1F27" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+
+          <!-- Bracos articulados independentes -->
+          <g class="mascot-arm-l" style="transform-origin: 148px 326px;">
+            
+            <path d="M148 326 C106 300 94 242 108 200" fill="none" stroke="url(#st-2-1-celebrate-skin)" stroke-width="22" stroke-linecap="round"/>
+            <circle cx="110" cy="194" r="17" fill="url(#st-2-1-celebrate-skin)" stroke="#1E130D" stroke-width="3"/>
+          </g>
+          <g class="mascot-arm-r" style="transform-origin: 272px 326px;">
+            
+            <path d="M272 326 C314 300 326 242 312 200" fill="none" stroke="url(#st-2-1-celebrate-skin)" stroke-width="22" stroke-linecap="round"/>
+            <circle cx="310" cy="194" r="17" fill="url(#st-2-1-celebrate-skin)" stroke="#1E130D" stroke-width="3"/>
+            <circle cx="316" cy="258" r="9" fill="#2A2D36" stroke="#111" stroke-width="2"/>
+          </g>
+
+          <!-- Tronco + Rim Light -->
+          <g class="mascot-torso" style="transform-origin: 210px 395px;">
+            <path d="M144 302 Q210 290 276 302 L292 344 L268 354 L270 398 L150 398 L152 354 L128 344 Z" fill="url(#st-2-1-celebrate-shirt)" stroke="#0E0F14" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M164 316 Q210 330 256 316" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M182 300 Q210 318 238 300" fill="none" stroke="#14161D" stroke-width="4"/>
+          </g>
+
+          <!-- Cabeca Articulada (pivote no pescoco) -->
+          <g class="mascot-head-rig" style="transform-origin: 210px 286px;">
+            <rect x="192" y="276" width="36" height="30" rx="10" fill="#D88858" stroke="#1E130D" stroke-width="3"/>
+            <ellipse cx="106" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+            <ellipse cx="314" cy="196" rx="17" ry="24" fill="#E39766" stroke="#1E130D" stroke-width="3.5"/>
+
+            <!-- Rosto 2.5D -->
+            <path d="M112 162 C112 96 308 96 308 162 C308 232 284 282 210 282 C136 282 112 232 112 162 Z" fill="url(#st-2-1-celebrate-skin)" stroke="#1E130D" stroke-width="4"/>
+            <!-- Rubor sutil nas bochechas -->
+            <ellipse cx="148" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+            <ellipse cx="272" cy="216" rx="16" ry="8" fill="#E27D60" opacity="0.24"/>
+
+            <!-- Cabelo volumetrico -->
+            <path d="M108 172 C100 106 132 58 210 56 C288 58 320 106 312 172 C304 142 284 122 252 124 C236 114 218 126 198 120 C172 112 148 126 128 134 C116 144 112 154 108 172 Z" fill="url(#st-2-1-celebrate-hair)" stroke="#160B06" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M150 82 Q178 68 206 78 M218 76 Q246 66 270 84" fill="none" stroke="#5A3929" stroke-width="5" stroke-linecap="round"/>
+
+            <!-- Barba -->
+            <path d="M114 196 C114 252 152 284 210 284 C268 284 306 252 306 196 C298 220 278 232 252 230 C236 226 224 222 210 222 C196 222 184 226 168 230 C142 232 122 220 114 196 Z" fill="#24150E" stroke="#160B06" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="210" cy="252" rx="34" ry="18" fill="#F2AB7E"/>
+            <path d="M178 236 Q210 222 242 236 Q230 246 210 242 Q190 246 178 236 Z" fill="#24150E"/>
+            <path d="M204 206 Q210 222 218 212" fill="none" stroke="#C47444" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- Sobrancelhas -->
+            <g class="mascot-brows" style="transform-origin: 210px 160px;">
+              
+        <path d="M146 154 Q168 140 188 154" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+        <path d="M234 154 Q254 140 276 154" fill="none" stroke="#1E130D" stroke-width="7.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- Olhos + Palpebras para piscada natural -->
+            <g class="mascot-eyes" style="transform-origin: 210px 193px;">
+              
+        <ellipse cx="170" cy="190" rx="22" ry="22" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="171" cy="190" r="12" fill="#23140E"/>
+        <circle cx="166" cy="184" r="4.2" fill="#FFFFFF"/>
+        <ellipse cx="250" cy="190" rx="22" ry="22" fill="#FFFFFF" stroke="#1E130D" stroke-width="3.5"/>
+        <circle cx="249" cy="190" r="12" fill="#23140E"/>
+        <circle cx="244" cy="184" r="4.2" fill="#FFFFFF"/>
+              <g class="mascot-eyelids" opacity="0">
+                <path d="M150 193 Q170 202 190 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+                <path d="M230 193 Q250 202 270 193" fill="none" stroke="#1E130D" stroke-width="5" stroke-linecap="round"/>
+              </g>
+            </g>
+
+            <!-- Boca sincronizada com WordBoundary (lip-sync) -->
+            <g class="mascot-mouth" style="transform-origin: 210px 252px;">
+              
+        <ellipse cx="210" cy="255" rx="16" ry="15" fill="#5E1D1B" stroke="#1E130D" stroke-width="3.5"/>
+        <path d="M199 246 Q210 249 221 246" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="210" cy="263" rx="9" ry="5" fill="#E06D6D"/>
+            </g>
+          </g>
+
+          <!-- Prop do mascote (lupa / venda / laptop) -->
+          <g class="mascot-prop" style="transform-origin: 210px 260px;">
+            
+          </g>
+        </g>
+      </svg>
+    </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="captions-layer" data-layout-allow-caption-zone="true">
+        
+        <div
+          id="cap-0-0"
+          class="clip caption-slot"
+          data-start="0.092"
+          data-duration="0.764"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="0.092" data-w-end="0.336">Você</span><span class="cap-word" data-w-start="0.347" data-w-end="0.739">escreve</span><span class="cap-word" data-w-start="0.749" data-w-end="0.855">um</span></div>
+        </div>
+        <div
+          id="cap-0-1"
+          class="clip caption-slot"
+          data-start="0.866"
+          data-duration="0.604"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="0.866" data-w-end="1.13">único</span><span class="cap-word" data-w-start="1.141" data-w-end="1.427">JSON</span><span class="cap-word" data-w-start="1.438" data-w-end="1.518">e</span></div>
+        </div>
+        <div
+          id="cap-0-2"
+          class="clip caption-slot"
+          data-start="1.48"
+          data-duration="0.753"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="1.48" data-w-end="1.724">gera</span><span class="cap-word" data-w-start="1.734" data-w-end="2.232">cinquenta</span></div>
+        </div>
+        <div
+          id="cap-0-3"
+          class="clip caption-slot"
+          data-start="2.243"
+          data-duration="1.04"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="2.243" data-w-end="2.497">vídeos</span><span class="cap-word" data-w-start="2.508" data-w-end="2.624">em</span><span class="cap-word" data-w-start="2.635" data-w-end="3.143">minutos</span></div>
+        </div>
+        <div
+          id="cap-1-0"
+          class="clip caption-slot"
+          data-start="4.12"
+          data-duration="0.626"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="4.12" data-w-end="4.237">A</span><span class="cap-word" data-w-start="4.248" data-w-end="4.428">voz</span><span class="cap-word" data-w-start="4.438" data-w-end="4.745">entra</span></div>
+        </div>
+        <div
+          id="cap-1-1"
+          class="clip caption-slot"
+          data-start="4.756"
+          data-duration="0.71"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="4.756" data-w-end="4.862">no</span><span class="cap-word" data-w-start="4.873" data-w-end="5.106">tempo</span><span class="cap-word" data-w-start="5.116" data-w-end="5.466">certo</span></div>
+        </div>
+        <div
+          id="cap-1-2"
+          class="clip caption-slot"
+          data-start="5.476"
+          data-duration="0.446"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="5.476" data-w-end="5.556">e</span><span class="cap-word" data-w-start="5.529" data-w-end="5.609">a</span><span class="cap-word" data-w-start="5.572" data-w-end="5.921">legenda</span></div>
+        </div>
+        <div
+          id="cap-1-3"
+          class="clip caption-slot"
+          data-start="5.932"
+          data-duration="0.858"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="5.932" data-w-end="6.228">marca</span><span class="cap-word" data-w-start="6.239" data-w-end="6.44">cada</span><span class="cap-word" data-w-start="6.451" data-w-end="6.79">palavra</span></div>
+        </div>
+        <div
+          id="cap-1-4"
+          class="clip caption-slot"
+          data-start="6.8"
+          data-duration="0.67"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="6.8" data-w-end="7.33">sozinha</span></div>
+        </div>
+        <div
+          id="cap-2-0"
+          class="clip caption-slot"
+          data-start="8.292"
+          data-duration="0.509"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="8.292" data-w-end="8.419">É</span><span class="cap-word" data-w-start="8.43" data-w-end="8.705">assim</span><span class="cap-word" data-w-start="8.716" data-w-end="8.801">que</span></div>
+        </div>
+        <div
+          id="cap-2-1"
+          class="clip caption-slot"
+          data-start="8.811"
+          data-duration="0.457"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="8.811" data-w-end="8.928">quem</span><span class="cap-word" data-w-start="8.939" data-w-end="9.235">domina</span><span class="cap-word" data-w-start="9.246" data-w-end="9.326">o</span></div>
+        </div>
+        <div
+          id="cap-2-2"
+          class="clip caption-slot"
+          data-start="9.278"
+          data-duration="0.731"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="9.278" data-w-end="9.532">feed</span><span class="cap-word" data-w-start="9.542" data-w-end="9.786">testa</span><span class="cap-word" data-w-start="9.797" data-w-end="10.008">dez</span></div>
+        </div>
+        <div
+          id="cap-2-3"
+          class="clip caption-slot"
+          data-start="10.019"
+          data-duration="1.083"
+          data-track-index="5"
+          data-layout-allow-caption-zone="true"
+        >
+          <div class="caption-pill"><span class="cap-word" data-w-start="10.019" data-w-end="10.337">vezes</span><span class="cap-word" data-w-start="10.347" data-w-end="10.559">mais</span><span class="cap-word" data-w-start="10.57" data-w-end="10.962">rápido</span></div>
+        </div>
+      </div>
+
+      <audio
+        id="bgm"
+        src="../assets/audio/bgm.mp3"
+        data-start="0"
+        data-duration="12.154"
+        data-track-index="11"
+        data-volume="0.14"
+        data-automation='{"version": 1, "lanes": [{"target": "volume", "points": [{"t": 0.0, "v": 0.13}, {"t": 3.968, "v": 0.13}, {"t": 4.028, "v": 0.13}, {"t": 8.14, "v": 0.13}, {"t": 8.2, "v": 0.13}, {"t": 12.094, "v": 0.13}, {"t": 12.154, "v": 0.02}]}]}'
+      ></audio>
+      
+      <audio
+        id="sfx-ev-1"
+        src="../assets/sfx/whoosh-short.mp3"
+        data-start="1.734"
+        data-duration="0.575"
+        data-track-index="12"
+        data-volume="0.16"
+      ></audio>
+      <audio
+        id="vo-0-s1-hook"
+        src="../assets/audio/generated/02-clones-digitais-escala/00_s1-hook.mp3"
+        data-audio-group="voiceover"
+        data-start="0.0"
+        data-duration="3.888"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="sfx-ev-2"
+        src="../assets/sfx/impact-bass-1.mp3"
+        data-start="0.0"
+        data-duration="0.85"
+        data-track-index="13"
+        data-volume="0.24"
+      ></audio>
+      <audio
+        id="sfx-ev-3"
+        src="../assets/sfx/pop.mp3"
+        data-start="0.866"
+        data-duration="0.72"
+        data-track-index="13"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="sfx-ev-4"
+        src="../assets/sfx/pop.mp3"
+        data-start="1.734"
+        data-duration="0.72"
+        data-track-index="13"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="vo-1-s2-how"
+        src="../assets/audio/generated/02-clones-digitais-escala/01_s2-how.mp3"
+        data-audio-group="voiceover"
+        data-start="4.028"
+        data-duration="4.032"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="sfx-ev-5"
+        src="../assets/sfx/click.mp3"
+        data-start="4.028"
+        data-duration="0.366"
+        data-track-index="12"
+        data-volume="0.24"
+      ></audio>
+      <audio
+        id="sfx-ev-6"
+        src="../assets/sfx/click.mp3"
+        data-start="4.248"
+        data-duration="0.366"
+        data-track-index="13"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="sfx-ev-7"
+        src="../assets/sfx/pop.mp3"
+        data-start="5.572"
+        data-duration="0.72"
+        data-track-index="12"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="sfx-ev-8"
+        src="../assets/sfx/click.mp3"
+        data-start="6.8"
+        data-duration="0.366"
+        data-track-index="12"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="sfx-ev-9"
+        src="../assets/sfx/whoosh-short.mp3"
+        data-start="10.57"
+        data-duration="0.575"
+        data-track-index="12"
+        data-volume="0.16"
+      ></audio>
+      <audio
+        id="vo-2-s3-cta"
+        src="../assets/audio/generated/02-clones-digitais-escala/02_s3-cta.mp3"
+        data-audio-group="voiceover"
+        data-start="8.2"
+        data-duration="3.504"
+        data-track-index="10"
+        data-volume="1.15"
+      ></audio>
+      <audio
+        id="sfx-ev-10"
+        src="../assets/sfx/sparkle.mp3"
+        data-start="8.2"
+        data-duration="0.85"
+        data-track-index="13"
+        data-volume="0.24"
+      ></audio>
+      <audio
+        id="sfx-ev-11"
+        src="../assets/sfx/click.mp3"
+        data-start="8.43"
+        data-duration="0.366"
+        data-track-index="14"
+        data-volume="0.18"
+      ></audio>
+      <audio
+        id="sfx-ev-12"
+        src="../assets/sfx/pop.mp3"
+        data-start="10.57"
+        data-duration="0.72"
+        data-track-index="13"
+        data-volume="0.18"
+      ></audio>
+    </div>
+
+    <script>
+      (function () {
+        var tl = gsap.timeline({ paused: true });
+        
+        // Scene 0: s1-hook
+        (function() {
+          var sc = document.getElementById("scene-0-s1-hook");
+          var curtain = sc.querySelector(".scene-curtain");
+          var cam = sc.querySelector(".scene-camera");
+          var layerProp = sc.querySelector(".layer-prop");
+          var layerMascot = sc.querySelector(".layer-mascot");
+          var t0 = 0.0;
+          var sdur = 4.028;
+
+          // 1) Transicao cortina vertical (cenas >= 1)
+          if (0 > 0 && curtain) {
+            tl.fromTo(curtain,
+              { clipPath: "inset(0% 0% 100% 0%)" },
+              { clipPath: "inset(0% 0% 0% 0%)", duration: 0.24, ease: "power3.out" },
+              t0
+            );
+          }
+
+          // 2) Camera virtual + parallax em 3 camadas
+          if (cam) {
+            tl.fromTo(cam, { scale: 1, x: 0, y: 0 }, { scale: 1.028, duration: Math.max(sdur - 0.1, 0.5), ease: "sine.inOut" }, t0);
+            if (true) {
+              tl.to(cam, {
+                keyframes: [
+                  { x: -7, y: 4, duration: 0.04 },
+                  { x: 6, y: -4, duration: 0.04 },
+                  { x: -4, y: 2, duration: 0.04 },
+                  { x: 0, y: 0, duration: 0.06 }
+                ],
+                ease: "none"
+              }, t0 + 0.06);
+            }
+            var empT = null;
+            if (empT !== null) {
+              tl.to(cam, { scale: 1.055, duration: 0.18, ease: "back.out(1.6)" }, empT);
+              tl.to(cam, { scale: 1.025, duration: 0.26, ease: "power2.out" }, empT + 0.22);
+            }
+          }
+          if (layerProp) {
+            tl.fromTo(layerProp, { x: -10 }, { x: 4, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+          if (layerMascot) {
+            tl.fromTo(layerMascot, { x: 10 }, { x: -4, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+
+          // 3) Headline lines + Highlight Sweep sincronizado
+          var hls = sc.querySelectorAll(".anim-hl");
+          hls.forEach(function (el, hIdx) {
+            var customT = el.getAttribute("data-line-cue-time");
+            var ht = customT ? parseFloat(customT) : (t0 + 0.05 + hIdx * 0.14);
+            tl.fromTo(el,
+              { y: 24, opacity: 0, scale: 0.94 },
+              { y: 0, opacity: 1, scale: 1, duration: 0.24, ease: "back.out(1.6)" },
+              ht
+            );
+          });
+
+          var sweeps = sc.querySelectorAll("[data-hl-cue-time]");
+          sweeps.forEach(function (sw) {
+            var stime = parseFloat(sw.getAttribute("data-hl-cue-time"));
+            var bar = sw.querySelector(".hl-sweep-bar");
+            var fg = sw.querySelector(".hl-sweep-fg");
+            if (bar) {
+              tl.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: "power3.out" }, stime);
+            }
+            if (fg) {
+              tl.fromTo(fg, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.26, ease: "power3.out" }, stime);
+            }
+          });
+
+          // 4) Props base (doors drop staggered, wheel spin, idle float)
+          var drops = sc.querySelectorAll(".prop-stagger-drop");
+          if (drops.length) {
+            tl.fromTo(drops,
+              { y: -110, opacity: 0, scaleY: 1.06 },
+              { y: 0, opacity: 1, scaleY: 1, duration: 0.30, stagger: 0.08, ease: "back.out(1.4)" },
+              t0 + 0.04
+            );
+          }
+          var bases = sc.querySelectorAll(".prop-base");
+          if (bases.length) {
+            tl.fromTo(bases,
+              { y: 34, opacity: 0, scale: 0.92 },
+              { y: 0, opacity: 1, scale: 1, duration: 0.30, stagger: 0.06, ease: "back.out(1.5)" },
+              t0 + 0.06
+            );
+          }
+          var wheel = sc.querySelector(".prop-wheel");
+          if (wheel) {
+            tl.to(wheel, { rotation: 360, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+
+          // 5) Word-Cue Sub-Elementos (pop-overshoot, pop-spin, grow-y, slide, stroke-draw, count-up)
+          var cueEls = sc.querySelectorAll("[data-cue-step]");
+          cueEls.forEach(function (el) {
+            var ct = parseFloat(el.getAttribute("data-cue-time")) || (t0 + 0.3);
+            var anim = el.getAttribute("data-cue-anim") || "pop-overshoot";
+            if (anim === "stroke-draw" && typeof el.getTotalLength === "function") {
+              var len = el.getTotalLength();
+              gsap.set(el, { strokeDasharray: len, strokeDashoffset: len });
+              tl.to(el, { strokeDashoffset: 0, duration: 0.34, ease: "power2.out" }, ct);
+            } else if (anim === "grow-y") {
+              tl.fromTo(el, { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, ct);
+            } else if (anim === "pop-spin") {
+              tl.fromTo(el, { scale: 0, rotation: -18, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.30, ease: "back.out(2.0)" }, ct);
+            } else if (anim === "slide-left") {
+              tl.fromTo(el, { x: -32, opacity: 0 }, { x: 0, opacity: 1, duration: 0.24, ease: "power3.out" }, ct);
+            } else if (anim === "slide-up") {
+              tl.fromTo(el, { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "back.out(1.5)" }, ct);
+            } else if (anim === "door-swing") {
+              tl.fromTo(el, { scaleX: 0.18 }, { scaleX: 1, duration: 0.32, ease: "back.out(1.6)" }, ct);
+            } else {
+              tl.fromTo(el, { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.28, ease: "back.out(2.1)" }, ct);
+            }
+
+            // Count-up numerico deterministico dentro do cue
+            var counters = el.querySelectorAll(".cue-count-up");
+            counters.forEach(function (cEl) {
+              var target = parseInt(cEl.getAttribute("data-count-target") || "0", 10);
+              var pref = cEl.getAttribute("data-count-prefix") || "";
+              var suff = cEl.getAttribute("data-count-suffix") || "";
+              var proxy = { v: 0 };
+              tl.fromTo(proxy, { v: 0 }, {
+                v: target,
+                duration: 0.55,
+                ease: "power2.out",
+                onUpdate: function () {
+                  var formatted = Math.round(proxy.v).toLocaleString("pt-BR");
+                  cEl.textContent = pref + formatted + suff;
+                }
+              }, ct);
+            });
+          });
+
+          // 6) Rig 2.5D do Mascote: Squash & Stretch + Trocas Intra-Cena + Blink + Lip-Sync
+          var slots = sc.querySelectorAll(".mascot-pose-slot");
+          var poseCues = [{"time": 1.734, "pose": "celebrate"}];
+          var speechEnvs = [{"start": 0.092, "end": 0.336, "strength": 1.0}, {"start": 0.356, "end": 0.739, "strength": 1.0}, {"start": 0.759, "end": 0.855, "strength": 0.72}, {"start": 0.875, "end": 1.13, "strength": 1.0}, {"start": 1.15, "end": 1.427, "strength": 1.0}, {"start": 1.447, "end": 1.518, "strength": 0.72}, {"start": 1.538, "end": 1.724, "strength": 1.0}, {"start": 1.744, "end": 2.232, "strength": 1.0}, {"start": 2.252, "end": 2.497, "strength": 1.0}, {"start": 2.517, "end": 2.624, "strength": 0.72}, {"start": 2.644, "end": 3.143, "strength": 1.0}];
+
+          slots.forEach(function (slot, sIdx) {
+            var bodyRig = slot.querySelector(".mascot-body-rig");
+            var shadow = slot.querySelector(".mascot-shadow");
+            var head = slot.querySelector(".mascot-head-rig");
+            var eyelids = slot.querySelector(".mascot-eyelids");
+            var mouth = slot.querySelector(".mascot-mouth");
+            var armL = slot.querySelector(".mascot-arm-l");
+            var armR = slot.querySelector(".mascot-arm-r");
+
+            if (sIdx === 0) {
+              tl.set(slot, { opacity: 1 }, t0);
+              if (bodyRig) {
+                tl.fromTo(bodyRig,
+                  { y: 48, scaleX: 1.18, scaleY: 0.80, svgOrigin: "210 526" },
+                  {
+                    keyframes: [
+                      { y: -12, scaleX: 0.94, scaleY: 1.07, duration: 0.16, ease: "power2.out" },
+                      { y: 0, scaleX: 1, scaleY: 1, duration: 0.18, ease: "back.out(1.8)" }
+                    ],
+                    ease: "none"
+                  },
+                  t0
+                );
+              }
+              if (shadow) {
+                tl.fromTo(shadow,
+                  { scaleX: 1.24, opacity: 0.18, transformOrigin: "50% 50%" },
+                  { scaleX: 1, opacity: 0.26, duration: 0.34, ease: "power2.out" },
+                  t0
+                );
+              }
+            } else {
+              gsap.set(slot, { opacity: 0 });
+            }
+
+            // Piscada natural a cada 2.1s (finita)
+            if (eyelids) {
+              for (var bt = t0 + 0.8; bt < t0 + sdur - 0.3; bt += 2.1) {
+                tl.to(eyelids, { opacity: 1, duration: 0.05, ease: "power1.in" }, bt);
+                tl.to(eyelids, { opacity: 0, duration: 0.07, ease: "power1.out" }, bt + 0.06);
+              }
+            }
+
+            // Lip-Sync & Head-Nodding no WordBoundary
+            speechEnvs.forEach(function (env, eIdx) {
+              var wdur = Math.max(0.06, env.end - env.start);
+              var half = wdur * 0.5;
+              if (mouth) {
+                tl.to(mouth, { scaleY: 1 + 0.28 * env.strength, scaleX: 0.95, transformOrigin: "50% 50%", duration: half, ease: "power1.out" }, env.start);
+                tl.to(mouth, { scaleY: 1, scaleX: 1, transformOrigin: "50% 50%", duration: half, ease: "power1.in" }, env.start + half);
+              }
+              if (head && eIdx % 2 === 0) {
+                var tilt = (eIdx % 4 === 0) ? 2.4 : -2.2;
+                tl.to(head, { rotation: tilt, y: -2.5, svgOrigin: "210 282", duration: half, ease: "sine.out" }, env.start);
+                tl.to(head, { rotation: 0, y: 0, svgOrigin: "210 282", duration: half, ease: "sine.in" }, env.start + half);
+              }
+            });
+
+            // Braco acompanha os cues da cena
+            if (armL || armR) {
+              cueEls.forEach(function (ce, cIdx) {
+                var ct = parseFloat(ce.getAttribute("data-cue-time")) || (t0 + 0.4);
+                var isLeft = (cIdx % 2 === 0 && armL);
+                var targetArm = isLeft ? armL : armR;
+                var armOrigin = isLeft ? "152 324" : "268 324";
+                if (targetArm) {
+                  tl.to(targetArm, { rotation: -7, svgOrigin: armOrigin, duration: 0.14, ease: "power2.out" }, ct);
+                  tl.to(targetArm, { rotation: 0, svgOrigin: armOrigin, duration: 0.20, ease: "power2.inOut" }, ct + 0.15);
+                }
+              });
+            }
+          });
+
+          // Troca de pose intra-cena com squash & stretch
+          poseCues.forEach(function (pc, pcIdx) {
+            var prevSlot = slots[pcIdx];
+            var nextSlot = slots[pcIdx + 1];
+            if (!prevSlot || !nextSlot) return;
+            var prevRig = prevSlot.querySelector(".mascot-body-rig");
+            var nextRig = nextSlot.querySelector(".mascot-body-rig");
+            if (prevRig) {
+              tl.to(prevRig, { scaleX: 1.15, scaleY: 0.82, svgOrigin: "210 526", duration: 0.08, ease: "power2.in" }, pc.time - 0.06);
+            }
+            tl.set(prevSlot, { opacity: 0 }, pc.time);
+            tl.set(nextSlot, { opacity: 1 }, pc.time);
+            if (nextRig) {
+              tl.fromTo(nextRig,
+                { scaleX: 1.20, scaleY: 0.78, y: 12, svgOrigin: "210 526" },
+                {
+                  keyframes: [
+                    { scaleX: 0.94, scaleY: 1.07, y: -8, duration: 0.12, ease: "power2.out" },
+                    { scaleX: 1, scaleY: 1, y: 0, duration: 0.16, ease: "back.out(1.8)" }
+                  ],
+                  ease: "none"
+                },
+                pc.time
+              );
+            }
+          });
+        })();
+        // Scene 1: s2-how
+        (function() {
+          var sc = document.getElementById("scene-1-s2-how");
+          var curtain = sc.querySelector(".scene-curtain");
+          var cam = sc.querySelector(".scene-camera");
+          var layerProp = sc.querySelector(".layer-prop");
+          var layerMascot = sc.querySelector(".layer-mascot");
+          var t0 = 4.028;
+          var sdur = 4.172;
+
+          // 1) Transicao cortina vertical (cenas >= 1)
+          if (1 > 0 && curtain) {
+            tl.fromTo(curtain,
+              { clipPath: "inset(0% 0% 100% 0%)" },
+              { clipPath: "inset(0% 0% 0% 0%)", duration: 0.24, ease: "power3.out" },
+              t0
+            );
+          }
+
+          // 2) Camera virtual + parallax em 3 camadas
+          if (cam) {
+            tl.fromTo(cam, { scale: 1, x: 0, y: 0 }, { scale: 1.028, duration: Math.max(sdur - 0.1, 0.5), ease: "sine.inOut" }, t0);
+            if (false) {
+              tl.to(cam, {
+                keyframes: [
+                  { x: -7, y: 4, duration: 0.04 },
+                  { x: 6, y: -4, duration: 0.04 },
+                  { x: -4, y: 2, duration: 0.04 },
+                  { x: 0, y: 0, duration: 0.06 }
+                ],
+                ease: "none"
+              }, t0 + 0.06);
+            }
+            var empT = null;
+            if (empT !== null) {
+              tl.to(cam, { scale: 1.055, duration: 0.18, ease: "back.out(1.6)" }, empT);
+              tl.to(cam, { scale: 1.025, duration: 0.26, ease: "power2.out" }, empT + 0.22);
+            }
+          }
+          if (layerProp) {
+            tl.fromTo(layerProp, { x: -10 }, { x: 4, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+          if (layerMascot) {
+            tl.fromTo(layerMascot, { x: 10 }, { x: -4, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+
+          // 3) Headline lines + Highlight Sweep sincronizado
+          var hls = sc.querySelectorAll(".anim-hl");
+          hls.forEach(function (el, hIdx) {
+            var customT = el.getAttribute("data-line-cue-time");
+            var ht = customT ? parseFloat(customT) : (t0 + 0.05 + hIdx * 0.14);
+            tl.fromTo(el,
+              { y: 24, opacity: 0, scale: 0.94 },
+              { y: 0, opacity: 1, scale: 1, duration: 0.24, ease: "back.out(1.6)" },
+              ht
+            );
+          });
+
+          var sweeps = sc.querySelectorAll("[data-hl-cue-time]");
+          sweeps.forEach(function (sw) {
+            var stime = parseFloat(sw.getAttribute("data-hl-cue-time"));
+            var bar = sw.querySelector(".hl-sweep-bar");
+            var fg = sw.querySelector(".hl-sweep-fg");
+            if (bar) {
+              tl.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: "power3.out" }, stime);
+            }
+            if (fg) {
+              tl.fromTo(fg, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.26, ease: "power3.out" }, stime);
+            }
+          });
+
+          // 4) Props base (doors drop staggered, wheel spin, idle float)
+          var drops = sc.querySelectorAll(".prop-stagger-drop");
+          if (drops.length) {
+            tl.fromTo(drops,
+              { y: -110, opacity: 0, scaleY: 1.06 },
+              { y: 0, opacity: 1, scaleY: 1, duration: 0.30, stagger: 0.08, ease: "back.out(1.4)" },
+              t0 + 0.04
+            );
+          }
+          var bases = sc.querySelectorAll(".prop-base");
+          if (bases.length) {
+            tl.fromTo(bases,
+              { y: 34, opacity: 0, scale: 0.92 },
+              { y: 0, opacity: 1, scale: 1, duration: 0.30, stagger: 0.06, ease: "back.out(1.5)" },
+              t0 + 0.06
+            );
+          }
+          var wheel = sc.querySelector(".prop-wheel");
+          if (wheel) {
+            tl.to(wheel, { rotation: 360, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+
+          // 5) Word-Cue Sub-Elementos (pop-overshoot, pop-spin, grow-y, slide, stroke-draw, count-up)
+          var cueEls = sc.querySelectorAll("[data-cue-step]");
+          cueEls.forEach(function (el) {
+            var ct = parseFloat(el.getAttribute("data-cue-time")) || (t0 + 0.3);
+            var anim = el.getAttribute("data-cue-anim") || "pop-overshoot";
+            if (anim === "stroke-draw" && typeof el.getTotalLength === "function") {
+              var len = el.getTotalLength();
+              gsap.set(el, { strokeDasharray: len, strokeDashoffset: len });
+              tl.to(el, { strokeDashoffset: 0, duration: 0.34, ease: "power2.out" }, ct);
+            } else if (anim === "grow-y") {
+              tl.fromTo(el, { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, ct);
+            } else if (anim === "pop-spin") {
+              tl.fromTo(el, { scale: 0, rotation: -18, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.30, ease: "back.out(2.0)" }, ct);
+            } else if (anim === "slide-left") {
+              tl.fromTo(el, { x: -32, opacity: 0 }, { x: 0, opacity: 1, duration: 0.24, ease: "power3.out" }, ct);
+            } else if (anim === "slide-up") {
+              tl.fromTo(el, { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "back.out(1.5)" }, ct);
+            } else if (anim === "door-swing") {
+              tl.fromTo(el, { scaleX: 0.18 }, { scaleX: 1, duration: 0.32, ease: "back.out(1.6)" }, ct);
+            } else {
+              tl.fromTo(el, { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.28, ease: "back.out(2.1)" }, ct);
+            }
+
+            // Count-up numerico deterministico dentro do cue
+            var counters = el.querySelectorAll(".cue-count-up");
+            counters.forEach(function (cEl) {
+              var target = parseInt(cEl.getAttribute("data-count-target") || "0", 10);
+              var pref = cEl.getAttribute("data-count-prefix") || "";
+              var suff = cEl.getAttribute("data-count-suffix") || "";
+              var proxy = { v: 0 };
+              tl.fromTo(proxy, { v: 0 }, {
+                v: target,
+                duration: 0.55,
+                ease: "power2.out",
+                onUpdate: function () {
+                  var formatted = Math.round(proxy.v).toLocaleString("pt-BR");
+                  cEl.textContent = pref + formatted + suff;
+                }
+              }, ct);
+            });
+          });
+
+          // 6) Rig 2.5D do Mascote: Squash & Stretch + Trocas Intra-Cena + Blink + Lip-Sync
+          var slots = sc.querySelectorAll(".mascot-pose-slot");
+          var poseCues = [];
+          var speechEnvs = [{"start": 4.12, "end": 4.237, "strength": 0.72}, {"start": 4.257, "end": 4.428, "strength": 0.72}, {"start": 4.448, "end": 4.745, "strength": 1.0}, {"start": 4.765, "end": 4.862, "strength": 0.72}, {"start": 4.882, "end": 5.106, "strength": 1.0}, {"start": 5.126, "end": 5.466, "strength": 1.0}, {"start": 5.486, "end": 5.556, "strength": 0.72}, {"start": 5.576, "end": 5.609, "strength": 0.72}, {"start": 5.629, "end": 5.921, "strength": 1.0}, {"start": 5.941, "end": 6.228, "strength": 1.0}, {"start": 6.248, "end": 6.44, "strength": 1.0}, {"start": 6.46, "end": 6.79, "strength": 1.0}, {"start": 6.81, "end": 7.33, "strength": 1.0}];
+
+          slots.forEach(function (slot, sIdx) {
+            var bodyRig = slot.querySelector(".mascot-body-rig");
+            var shadow = slot.querySelector(".mascot-shadow");
+            var head = slot.querySelector(".mascot-head-rig");
+            var eyelids = slot.querySelector(".mascot-eyelids");
+            var mouth = slot.querySelector(".mascot-mouth");
+            var armL = slot.querySelector(".mascot-arm-l");
+            var armR = slot.querySelector(".mascot-arm-r");
+
+            if (sIdx === 0) {
+              tl.set(slot, { opacity: 1 }, t0);
+              if (bodyRig) {
+                tl.fromTo(bodyRig,
+                  { y: 48, scaleX: 1.18, scaleY: 0.80, svgOrigin: "210 526" },
+                  {
+                    keyframes: [
+                      { y: -12, scaleX: 0.94, scaleY: 1.07, duration: 0.16, ease: "power2.out" },
+                      { y: 0, scaleX: 1, scaleY: 1, duration: 0.18, ease: "back.out(1.8)" }
+                    ],
+                    ease: "none"
+                  },
+                  t0
+                );
+              }
+              if (shadow) {
+                tl.fromTo(shadow,
+                  { scaleX: 1.24, opacity: 0.18, transformOrigin: "50% 50%" },
+                  { scaleX: 1, opacity: 0.26, duration: 0.34, ease: "power2.out" },
+                  t0
+                );
+              }
+            } else {
+              gsap.set(slot, { opacity: 0 });
+            }
+
+            // Piscada natural a cada 2.1s (finita)
+            if (eyelids) {
+              for (var bt = t0 + 0.8; bt < t0 + sdur - 0.3; bt += 2.1) {
+                tl.to(eyelids, { opacity: 1, duration: 0.05, ease: "power1.in" }, bt);
+                tl.to(eyelids, { opacity: 0, duration: 0.07, ease: "power1.out" }, bt + 0.06);
+              }
+            }
+
+            // Lip-Sync & Head-Nodding no WordBoundary
+            speechEnvs.forEach(function (env, eIdx) {
+              var wdur = Math.max(0.06, env.end - env.start);
+              var half = wdur * 0.5;
+              if (mouth) {
+                tl.to(mouth, { scaleY: 1 + 0.28 * env.strength, scaleX: 0.95, transformOrigin: "50% 50%", duration: half, ease: "power1.out" }, env.start);
+                tl.to(mouth, { scaleY: 1, scaleX: 1, transformOrigin: "50% 50%", duration: half, ease: "power1.in" }, env.start + half);
+              }
+              if (head && eIdx % 2 === 0) {
+                var tilt = (eIdx % 4 === 0) ? 2.4 : -2.2;
+                tl.to(head, { rotation: tilt, y: -2.5, svgOrigin: "210 282", duration: half, ease: "sine.out" }, env.start);
+                tl.to(head, { rotation: 0, y: 0, svgOrigin: "210 282", duration: half, ease: "sine.in" }, env.start + half);
+              }
+            });
+
+            // Braco acompanha os cues da cena
+            if (armL || armR) {
+              cueEls.forEach(function (ce, cIdx) {
+                var ct = parseFloat(ce.getAttribute("data-cue-time")) || (t0 + 0.4);
+                var isLeft = (cIdx % 2 === 0 && armL);
+                var targetArm = isLeft ? armL : armR;
+                var armOrigin = isLeft ? "152 324" : "268 324";
+                if (targetArm) {
+                  tl.to(targetArm, { rotation: -7, svgOrigin: armOrigin, duration: 0.14, ease: "power2.out" }, ct);
+                  tl.to(targetArm, { rotation: 0, svgOrigin: armOrigin, duration: 0.20, ease: "power2.inOut" }, ct + 0.15);
+                }
+              });
+            }
+          });
+
+          // Troca de pose intra-cena com squash & stretch
+          poseCues.forEach(function (pc, pcIdx) {
+            var prevSlot = slots[pcIdx];
+            var nextSlot = slots[pcIdx + 1];
+            if (!prevSlot || !nextSlot) return;
+            var prevRig = prevSlot.querySelector(".mascot-body-rig");
+            var nextRig = nextSlot.querySelector(".mascot-body-rig");
+            if (prevRig) {
+              tl.to(prevRig, { scaleX: 1.15, scaleY: 0.82, svgOrigin: "210 526", duration: 0.08, ease: "power2.in" }, pc.time - 0.06);
+            }
+            tl.set(prevSlot, { opacity: 0 }, pc.time);
+            tl.set(nextSlot, { opacity: 1 }, pc.time);
+            if (nextRig) {
+              tl.fromTo(nextRig,
+                { scaleX: 1.20, scaleY: 0.78, y: 12, svgOrigin: "210 526" },
+                {
+                  keyframes: [
+                    { scaleX: 0.94, scaleY: 1.07, y: -8, duration: 0.12, ease: "power2.out" },
+                    { scaleX: 1, scaleY: 1, y: 0, duration: 0.16, ease: "back.out(1.8)" }
+                  ],
+                  ease: "none"
+                },
+                pc.time
+              );
+            }
+          });
+        })();
+        // Scene 2: s3-cta
+        (function() {
+          var sc = document.getElementById("scene-2-s3-cta");
+          var curtain = sc.querySelector(".scene-curtain");
+          var cam = sc.querySelector(".scene-camera");
+          var layerProp = sc.querySelector(".layer-prop");
+          var layerMascot = sc.querySelector(".layer-mascot");
+          var t0 = 8.2;
+          var sdur = 3.954;
+
+          // 1) Transicao cortina vertical (cenas >= 1)
+          if (2 > 0 && curtain) {
+            tl.fromTo(curtain,
+              { clipPath: "inset(0% 0% 100% 0%)" },
+              { clipPath: "inset(0% 0% 0% 0%)", duration: 0.24, ease: "power3.out" },
+              t0
+            );
+          }
+
+          // 2) Camera virtual + parallax em 3 camadas
+          if (cam) {
+            tl.fromTo(cam, { scale: 1, x: 0, y: 0 }, { scale: 1.028, duration: Math.max(sdur - 0.1, 0.5), ease: "sine.inOut" }, t0);
+            if (false) {
+              tl.to(cam, {
+                keyframes: [
+                  { x: -7, y: 4, duration: 0.04 },
+                  { x: 6, y: -4, duration: 0.04 },
+                  { x: -4, y: 2, duration: 0.04 },
+                  { x: 0, y: 0, duration: 0.06 }
+                ],
+                ease: "none"
+              }, t0 + 0.06);
+            }
+            var empT = null;
+            if (empT !== null) {
+              tl.to(cam, { scale: 1.055, duration: 0.18, ease: "back.out(1.6)" }, empT);
+              tl.to(cam, { scale: 1.025, duration: 0.26, ease: "power2.out" }, empT + 0.22);
+            }
+          }
+          if (layerProp) {
+            tl.fromTo(layerProp, { x: -10 }, { x: 4, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+          if (layerMascot) {
+            tl.fromTo(layerMascot, { x: 10 }, { x: -4, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+
+          // 3) Headline lines + Highlight Sweep sincronizado
+          var hls = sc.querySelectorAll(".anim-hl");
+          hls.forEach(function (el, hIdx) {
+            var customT = el.getAttribute("data-line-cue-time");
+            var ht = customT ? parseFloat(customT) : (t0 + 0.05 + hIdx * 0.14);
+            tl.fromTo(el,
+              { y: 24, opacity: 0, scale: 0.94 },
+              { y: 0, opacity: 1, scale: 1, duration: 0.24, ease: "back.out(1.6)" },
+              ht
+            );
+          });
+
+          var sweeps = sc.querySelectorAll("[data-hl-cue-time]");
+          sweeps.forEach(function (sw) {
+            var stime = parseFloat(sw.getAttribute("data-hl-cue-time"));
+            var bar = sw.querySelector(".hl-sweep-bar");
+            var fg = sw.querySelector(".hl-sweep-fg");
+            if (bar) {
+              tl.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: "power3.out" }, stime);
+            }
+            if (fg) {
+              tl.fromTo(fg, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.26, ease: "power3.out" }, stime);
+            }
+          });
+
+          // 4) Props base (doors drop staggered, wheel spin, idle float)
+          var drops = sc.querySelectorAll(".prop-stagger-drop");
+          if (drops.length) {
+            tl.fromTo(drops,
+              { y: -110, opacity: 0, scaleY: 1.06 },
+              { y: 0, opacity: 1, scaleY: 1, duration: 0.30, stagger: 0.08, ease: "back.out(1.4)" },
+              t0 + 0.04
+            );
+          }
+          var bases = sc.querySelectorAll(".prop-base");
+          if (bases.length) {
+            tl.fromTo(bases,
+              { y: 34, opacity: 0, scale: 0.92 },
+              { y: 0, opacity: 1, scale: 1, duration: 0.30, stagger: 0.06, ease: "back.out(1.5)" },
+              t0 + 0.06
+            );
+          }
+          var wheel = sc.querySelector(".prop-wheel");
+          if (wheel) {
+            tl.to(wheel, { rotation: 360, duration: Math.max(sdur - 0.1, 0.5), ease: "none" }, t0);
+          }
+
+          // 5) Word-Cue Sub-Elementos (pop-overshoot, pop-spin, grow-y, slide, stroke-draw, count-up)
+          var cueEls = sc.querySelectorAll("[data-cue-step]");
+          cueEls.forEach(function (el) {
+            var ct = parseFloat(el.getAttribute("data-cue-time")) || (t0 + 0.3);
+            var anim = el.getAttribute("data-cue-anim") || "pop-overshoot";
+            if (anim === "stroke-draw" && typeof el.getTotalLength === "function") {
+              var len = el.getTotalLength();
+              gsap.set(el, { strokeDasharray: len, strokeDashoffset: len });
+              tl.to(el, { strokeDashoffset: 0, duration: 0.34, ease: "power2.out" }, ct);
+            } else if (anim === "grow-y") {
+              tl.fromTo(el, { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, ct);
+            } else if (anim === "pop-spin") {
+              tl.fromTo(el, { scale: 0, rotation: -18, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.30, ease: "back.out(2.0)" }, ct);
+            } else if (anim === "slide-left") {
+              tl.fromTo(el, { x: -32, opacity: 0 }, { x: 0, opacity: 1, duration: 0.24, ease: "power3.out" }, ct);
+            } else if (anim === "slide-up") {
+              tl.fromTo(el, { y: 42, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "back.out(1.5)" }, ct);
+            } else if (anim === "door-swing") {
+              tl.fromTo(el, { scaleX: 0.18 }, { scaleX: 1, duration: 0.32, ease: "back.out(1.6)" }, ct);
+            } else {
+              tl.fromTo(el, { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.28, ease: "back.out(2.1)" }, ct);
+            }
+
+            // Count-up numerico deterministico dentro do cue
+            var counters = el.querySelectorAll(".cue-count-up");
+            counters.forEach(function (cEl) {
+              var target = parseInt(cEl.getAttribute("data-count-target") || "0", 10);
+              var pref = cEl.getAttribute("data-count-prefix") || "";
+              var suff = cEl.getAttribute("data-count-suffix") || "";
+              var proxy = { v: 0 };
+              tl.fromTo(proxy, { v: 0 }, {
+                v: target,
+                duration: 0.55,
+                ease: "power2.out",
+                onUpdate: function () {
+                  var formatted = Math.round(proxy.v).toLocaleString("pt-BR");
+                  cEl.textContent = pref + formatted + suff;
+                }
+              }, ct);
+            });
+          });
+
+          // 6) Rig 2.5D do Mascote: Squash & Stretch + Trocas Intra-Cena + Blink + Lip-Sync
+          var slots = sc.querySelectorAll(".mascot-pose-slot");
+          var poseCues = [{"time": 10.57, "pose": "celebrate"}];
+          var speechEnvs = [{"start": 8.292, "end": 8.419, "strength": 0.72}, {"start": 8.439, "end": 8.705, "strength": 1.0}, {"start": 8.725, "end": 8.801, "strength": 0.72}, {"start": 8.821, "end": 8.928, "strength": 1.0}, {"start": 8.948, "end": 9.235, "strength": 1.0}, {"start": 9.255, "end": 9.326, "strength": 0.72}, {"start": 9.346, "end": 9.532, "strength": 1.0}, {"start": 9.552, "end": 9.786, "strength": 1.0}, {"start": 9.806, "end": 10.008, "strength": 0.72}, {"start": 10.028, "end": 10.337, "strength": 1.0}, {"start": 10.357, "end": 10.559, "strength": 1.0}, {"start": 10.579, "end": 10.962, "strength": 1.0}];
+
+          slots.forEach(function (slot, sIdx) {
+            var bodyRig = slot.querySelector(".mascot-body-rig");
+            var shadow = slot.querySelector(".mascot-shadow");
+            var head = slot.querySelector(".mascot-head-rig");
+            var eyelids = slot.querySelector(".mascot-eyelids");
+            var mouth = slot.querySelector(".mascot-mouth");
+            var armL = slot.querySelector(".mascot-arm-l");
+            var armR = slot.querySelector(".mascot-arm-r");
+
+            if (sIdx === 0) {
+              tl.set(slot, { opacity: 1 }, t0);
+              if (bodyRig) {
+                tl.fromTo(bodyRig,
+                  { y: 48, scaleX: 1.18, scaleY: 0.80, svgOrigin: "210 526" },
+                  {
+                    keyframes: [
+                      { y: -12, scaleX: 0.94, scaleY: 1.07, duration: 0.16, ease: "power2.out" },
+                      { y: 0, scaleX: 1, scaleY: 1, duration: 0.18, ease: "back.out(1.8)" }
+                    ],
+                    ease: "none"
+                  },
+                  t0
+                );
+              }
+              if (shadow) {
+                tl.fromTo(shadow,
+                  { scaleX: 1.24, opacity: 0.18, transformOrigin: "50% 50%" },
+                  { scaleX: 1, opacity: 0.26, duration: 0.34, ease: "power2.out" },
+                  t0
+                );
+              }
+            } else {
+              gsap.set(slot, { opacity: 0 });
+            }
+
+            // Piscada natural a cada 2.1s (finita)
+            if (eyelids) {
+              for (var bt = t0 + 0.8; bt < t0 + sdur - 0.3; bt += 2.1) {
+                tl.to(eyelids, { opacity: 1, duration: 0.05, ease: "power1.in" }, bt);
+                tl.to(eyelids, { opacity: 0, duration: 0.07, ease: "power1.out" }, bt + 0.06);
+              }
+            }
+
+            // Lip-Sync & Head-Nodding no WordBoundary
+            speechEnvs.forEach(function (env, eIdx) {
+              var wdur = Math.max(0.06, env.end - env.start);
+              var half = wdur * 0.5;
+              if (mouth) {
+                tl.to(mouth, { scaleY: 1 + 0.28 * env.strength, scaleX: 0.95, transformOrigin: "50% 50%", duration: half, ease: "power1.out" }, env.start);
+                tl.to(mouth, { scaleY: 1, scaleX: 1, transformOrigin: "50% 50%", duration: half, ease: "power1.in" }, env.start + half);
+              }
+              if (head && eIdx % 2 === 0) {
+                var tilt = (eIdx % 4 === 0) ? 2.4 : -2.2;
+                tl.to(head, { rotation: tilt, y: -2.5, svgOrigin: "210 282", duration: half, ease: "sine.out" }, env.start);
+                tl.to(head, { rotation: 0, y: 0, svgOrigin: "210 282", duration: half, ease: "sine.in" }, env.start + half);
+              }
+            });
+
+            // Braco acompanha os cues da cena
+            if (armL || armR) {
+              cueEls.forEach(function (ce, cIdx) {
+                var ct = parseFloat(ce.getAttribute("data-cue-time")) || (t0 + 0.4);
+                var isLeft = (cIdx % 2 === 0 && armL);
+                var targetArm = isLeft ? armL : armR;
+                var armOrigin = isLeft ? "152 324" : "268 324";
+                if (targetArm) {
+                  tl.to(targetArm, { rotation: -7, svgOrigin: armOrigin, duration: 0.14, ease: "power2.out" }, ct);
+                  tl.to(targetArm, { rotation: 0, svgOrigin: armOrigin, duration: 0.20, ease: "power2.inOut" }, ct + 0.15);
+                }
+              });
+            }
+          });
+
+          // Troca de pose intra-cena com squash & stretch
+          poseCues.forEach(function (pc, pcIdx) {
+            var prevSlot = slots[pcIdx];
+            var nextSlot = slots[pcIdx + 1];
+            if (!prevSlot || !nextSlot) return;
+            var prevRig = prevSlot.querySelector(".mascot-body-rig");
+            var nextRig = nextSlot.querySelector(".mascot-body-rig");
+            if (prevRig) {
+              tl.to(prevRig, { scaleX: 1.15, scaleY: 0.82, svgOrigin: "210 526", duration: 0.08, ease: "power2.in" }, pc.time - 0.06);
+            }
+            tl.set(prevSlot, { opacity: 0 }, pc.time);
+            tl.set(nextSlot, { opacity: 1 }, pc.time);
+            if (nextRig) {
+              tl.fromTo(nextRig,
+                { scaleX: 1.20, scaleY: 0.78, y: 12, svgOrigin: "210 526" },
+                {
+                  keyframes: [
+                    { scaleX: 0.94, scaleY: 1.07, y: -8, duration: 0.12, ease: "power2.out" },
+                    { scaleX: 1, scaleY: 1, y: 0, duration: 0.16, ease: "back.out(1.8)" }
+                  ],
+                  ease: "none"
+                },
+                pc.time
+              );
+            }
+          });
+        })();
+
+        // Legenda dinamica palavra por palavra sincronizada com WordBoundary
+        var capWords = document.querySelectorAll(".cap-word");
+        capWords.forEach(function (el) {
+          var ws = parseFloat(el.getAttribute("data-w-start"));
+          var we = parseFloat(el.getAttribute("data-w-end"));
+          tl.to(el, {
+            backgroundColor: "#D0EB2F",
+            color: "#11131A",
+            scale: 1.07,
+            duration: 0.05,
+            ease: "power2.out"
+          }, ws);
+          tl.to(el, {
+            backgroundColor: "rgba(208, 235, 47, 0)",
+            color: "#E2E6F0",
+            scale: 1,
+            duration: 0.05,
+            ease: "power2.in"
+          }, we);
+        });
+
+        tl.set({}, {}, 12.154);
+        window.__timelines["mgl-style"] = tl;
+      })();
+    </script>
+  </body>
+</html>

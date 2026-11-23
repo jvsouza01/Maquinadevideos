@@ -1,0 +1,28 @@
+{
+  "videos": [
+    {
+      "slug": "01-ranking-ia-validados",
+      "title": "Top 3 Produtos de IA Validados no Checkout",
+      "composition": "compositions/01-ranking-ia-validados.html",
+      "output": "renders/01-ranking-ia-validados.mp4",
+      "duration_s": 35.274,
+      "scenes": 7
+    },
+    {
+      "slug": "02-clones-digitais-escala",
+      "title": "Como Criar Vídeos em Massa com IA",
+      "composition": "compositions/02-clones-digitais-escala.html",
+      "output": "renders/02-clones-digitais-escala.mp4",
+      "duration_s": 12.154,
+      "scenes": 3
+    },
+    {
+      "slug": "03-revenue-clean-marina",
+      "title": "Marina — Revenue Clean (Aroma Íntimo)",
+      "composition": "compositions/03-revenue-clean-marina.html",
+      "output": "renders/03-revenue-clean-marina.mp4",
+      "duration_s": 48.69,
+      "scenes": 7
+    }
+  ]
+}

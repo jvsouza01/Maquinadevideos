@@ -1,0 +1,379 @@
+{
+  "tts_provider": "edge-tts",
+  "voice_id": "pt-BR-AntonioNeural",
+  "bgm": {
+    "path": "assets/audio/bgm.mp3",
+    "volume": 0.28,
+    "source": "host"
+  },
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/audio/voice-01.mp3",
+      "duration_s": 5.286,
+      "words": [
+        {
+          "text": "Fala,",
+          "start": 0.1,
+          "end": 0.875
+        },
+        {
+          "text": "Xerife!",
+          "start": 0.875,
+          "end": 1.961
+        },
+        {
+          "text": "Você",
+          "start": 1.911,
+          "end": 2.225
+        },
+        {
+          "text": "já",
+          "start": 2.225,
+          "end": 2.381
+        },
+        {
+          "text": "estuda",
+          "start": 2.381,
+          "end": 2.852
+        },
+        {
+          "text": "com",
+          "start": 2.852,
+          "end": 3.087
+        },
+        {
+          "text": "foco",
+          "start": 3.087,
+          "end": 3.4
+        },
+        {
+          "text": "e",
+          "start": 3.4,
+          "end": 3.52
+        },
+        {
+          "text": "disciplina",
+          "start": 3.52,
+          "end": 4.304
+        },
+        {
+          "text": "todos",
+          "start": 4.304,
+          "end": 4.696
+        },
+        {
+          "text": "os",
+          "start": 4.696,
+          "end": 4.853
+        },
+        {
+          "text": "dias.",
+          "start": 4.853,
+          "end": 5.203
+        }
+      ]
+    },
+    {
+      "frame": 2,
+      "path": "assets/audio/voice-02.mp3",
+      "duration_s": 4.302,
+      "words": [
+        {
+          "text": "Conheça",
+          "start": 0.1,
+          "end": 0.786
+        },
+        {
+          "text": "a",
+          "start": 0.786,
+          "end": 0.906
+        },
+        {
+          "text": "Vista",
+          "start": 0.906,
+          "end": 1.396
+        },
+        {
+          "text": "Rumo.",
+          "start": 1.396,
+          "end": 1.864
+        },
+        {
+          "text": "Vista",
+          "start": 1.814,
+          "end": 2.189
+        },
+        {
+          "text": "seu",
+          "start": 2.189,
+          "end": 2.413
+        },
+        {
+          "text": "caminho",
+          "start": 2.413,
+          "end": 2.938
+        },
+        {
+          "text": "rumo",
+          "start": 2.938,
+          "end": 3.237
+        },
+        {
+          "text": "ao",
+          "start": 3.237,
+          "end": 3.387
+        },
+        {
+          "text": "seu",
+          "start": 3.387,
+          "end": 3.612
+        },
+        {
+          "text": "destino.",
+          "start": 3.612,
+          "end": 4.211
+        }
+      ]
+    },
+    {
+      "frame": 3,
+      "path": "assets/audio/voice-03.mp3",
+      "duration_s": 6.39,
+      "words": [
+        {
+          "text": "Camisetas",
+          "start": 0.1,
+          "end": 0.687
+        },
+        {
+          "text": "casuais",
+          "start": 0.687,
+          "end": 1.143
+        },
+        {
+          "text": "e",
+          "start": 1.143,
+          "end": 1.264
+        },
+        {
+          "text": "linha",
+          "start": 1.264,
+          "end": 1.59
+        },
+        {
+          "text": "tática",
+          "start": 1.59,
+          "end": 1.981
+        },
+        {
+          "text": "com",
+          "start": 1.981,
+          "end": 2.177
+        },
+        {
+          "text": "proteção",
+          "start": 2.177,
+          "end": 2.698
+        },
+        {
+          "text": "UV",
+          "start": 2.698,
+          "end": 2.829
+        },
+        {
+          "text": "cinquenta",
+          "start": 2.829,
+          "end": 3.416
+        },
+        {
+          "text": "mais,",
+          "start": 3.416,
+          "end": 3.742
+        },
+        {
+          "text": "feitas",
+          "start": 3.742,
+          "end": 4.133
+        },
+        {
+          "text": "pra",
+          "start": 4.133,
+          "end": 4.329
+        },
+        {
+          "text": "sua",
+          "start": 4.329,
+          "end": 4.524
+        },
+        {
+          "text": "rotina",
+          "start": 4.524,
+          "end": 4.916
+        },
+        {
+          "text": "de",
+          "start": 4.916,
+          "end": 5.046
+        },
+        {
+          "text": "estudos",
+          "start": 5.046,
+          "end": 5.503
+        },
+        {
+          "text": "e",
+          "start": 5.503,
+          "end": 5.623
+        },
+        {
+          "text": "treino",
+          "start": 5.623,
+          "end": 6.014
+        },
+        {
+          "text": "pro",
+          "start": 6.014,
+          "end": 6.21
+        },
+        {
+          "text": "TAF.",
+          "start": 6.21,
+          "end": 6.361
+        }
+      ]
+    },
+    {
+      "frame": 4,
+      "path": "assets/audio/voice-04.mp3",
+      "duration_s": 6.678,
+      "words": [
+        {
+          "text": "E",
+          "start": 0.1,
+          "end": 0.22
+        },
+        {
+          "text": "aproveite:",
+          "start": 0.22,
+          "end": 0.987
+        },
+        {
+          "text": "frete",
+          "start": 0.987,
+          "end": 1.37
+        },
+        {
+          "text": "grátis",
+          "start": 1.37,
+          "end": 1.83
+        },
+        {
+          "text": "para",
+          "start": 1.83,
+          "end": 2.137
+        },
+        {
+          "text": "todo",
+          "start": 2.137,
+          "end": 2.444
+        },
+        {
+          "text": "o",
+          "start": 2.444,
+          "end": 2.564
+        },
+        {
+          "text": "Nordeste",
+          "start": 2.564,
+          "end": 3.178
+        },
+        {
+          "text": "a",
+          "start": 3.178,
+          "end": 3.298
+        },
+        {
+          "text": "partir",
+          "start": 3.298,
+          "end": 3.758
+        },
+        {
+          "text": "de",
+          "start": 3.758,
+          "end": 3.911
+        },
+        {
+          "text": "duas",
+          "start": 3.911,
+          "end": 4.218
+        },
+        {
+          "text": "peças.",
+          "start": 4.218,
+          "end": 4.548
+        },
+        {
+          "text": "Clique",
+          "start": 4.498,
+          "end": 5.021
+        },
+        {
+          "text": "no",
+          "start": 5.021,
+          "end": 5.195
+        },
+        {
+          "text": "link",
+          "start": 5.195,
+          "end": 5.543
+        },
+        {
+          "text": "da",
+          "start": 5.543,
+          "end": 5.717
+        },
+        {
+          "text": "descrição!",
+          "start": 5.717,
+          "end": 6.588
+        }
+      ]
+    }
+  ],
+  "sfx": [
+    {
+      "frame": 1,
+      "file": "assets/sfx/whoosh-cinematic.mp3",
+      "offset_s": 0,
+      "duration_s": 2,
+      "volume": 0.5,
+      "source": "host"
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/impact-bass-1.mp3",
+      "offset_s": 0,
+      "duration_s": 2.1,
+      "volume": 0.6,
+      "source": "host"
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 0,
+      "duration_s": 1.5,
+      "volume": 0.5,
+      "source": "host"
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/impact-bass-2.mp3",
+      "offset_s": 0,
+      "duration_s": 2.5,
+      "volume": 0.7,
+      "source": "host"
+    }
+  ],
+  "total_duration_s": 22.7
+}
